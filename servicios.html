@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Servicios — Capital Pyme</title>
+<meta name="description" content="Capital de trabajo, factoring, leasing, créditos de inversión, reestructuración de deuda, Corfo y Fogape. Soluciones de financiamiento para tu pyme." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .page-header {
+    padding: 180px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header .hero-glow {
+    width: 800px; height: 800px;
+    top: 0; left: 30%;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 24px 0 24px;
+    max-width: 1000px;
+  }
+  .page-header h1 em { font-style: italic; color: var(--accent); }
+  .page-header p {
+    font-size: clamp(17px, 1.5vw, 20px);
+    color: var(--text-dim);
+    max-width: 680px;
+    line-height: 1.5;
+  }
+
+  /* Navigation tabs (anchor menu) */
+  .anchor-nav {
+    position: sticky;
+    top: 72px;
+    z-index: 40;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .anchor-nav .wrap {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .anchor-nav .wrap::-webkit-scrollbar { display: none; }
+  .anchor-nav a {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+  .anchor-nav a:hover { color: var(--text); border-color: var(--line-strong); }
+
+  /* Service blocks */
+  .service-block {
+    padding: 100px 0;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 140px;
+  }
+  .service-block:first-of-type { border-top: none; }
+
+  .service-block-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .service-block-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .service-block .meta {
+    position: sticky;
+    top: 160px;
+  }
+  @media (max-width: 960px) {
+    .service-block .meta { position: static; }
+  }
+  .service-block .meta .num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .service-block .meta h2 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .service-block .meta h2 em { font-style: italic; color: var(--accent); }
+  .service-block .meta .lead {
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .service-block .features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .service-block .features li {
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .service-block .features li:last-child { border-bottom: 1px solid var(--line); }
+  .feat-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-soft);
+  }
+  .feat-text strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .feat-text p {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .service-block .actions {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Para quién */
+  .for-who {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-top: 24px;
+  }
+  .for-who h4 {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .for-who p {
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* CTA banner */
+  .cta-banner {
+    padding: 120px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(45, 212, 164, 0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    max-width: 800px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .cta-banner h2 em { font-style: italic; color: var(--accent); }
+  .cta-banner p {
+    color: var(--text-dim);
+    max-width: 540px;
+    margin: 0 auto 36px;
+    position: relative;
+  }
+  .cta-banner-ctas {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="wrap">
+    <a href="index.html" class="logo">capital pyme<span class="logo-dot"></span></a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html" class="active">Servicios</a>
+      <a href="proceso.html">Proceso</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="contacto.html" class="nav-cta">Agendar reunión →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="wrap reveal">
+    <span class="eyebrow">Nuestros servicios</span>
+    <h1>Seis soluciones, <em>una sola asesoría.</em></h1>
+    <p>Cada empresa enfrenta desafíos distintos. Estructuramos la solución correcta —desde capital de trabajo hasta inversión productiva— con la institución indicada y en el momento adecuado.</p>
+  </div>
+</header>
+
+<!-- ANCHOR NAV -->
+<div class="anchor-nav">
+  <div class="wrap">
+    <a href="#trabajo">01 · Capital de trabajo</a>
+    <a href="#factoring">02 · Factoring & confirming</a>
+    <a href="#leasing">03 · Leasing productivo</a>
+    <a href="#inversion">04 · Créditos de inversión</a>
+    <a href="#reestructuracion">05 · Reestructuración</a>
+    <a href="#corfo">06 · Corfo & Fogape</a>
+  </div>
+</div>
+
+<!-- SERVICIO 01 -->
+<section id="trabajo" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">01 / 06</div>
+        <h2>Capital <em>de trabajo</em></h2>
+        <p class="lead">Mantén la operación de tu empresa fluida sin tensionar la caja. Líneas de crédito, créditos rotativos y financiamiento de corto plazo estructurado según el ciclo real de tu negocio.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Empresas con flujo de caja estacional, gaps entre cuentas por pagar y cobrar, o que necesitan capital para crecer en ventas sin afectar liquidez.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Capital%20de%20trabajo" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></span>
+          <div class="feat-text">
+            <strong>Líneas de crédito comerciales</strong>
+            <p>Cupos disponibles para usar cuando los necesites, pagando solo por lo que ocupas. Negociamos tasa, cupo y condiciones de renovación.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7L21 8M21 3v5h-5"/></svg></span>
+          <div class="feat-text">
+            <strong>Créditos rotativos</strong>
+            <p>Estructuras que se renuevan automáticamente y se ajustan al ciclo de tu negocio. Ideales para empresas con ventas estacionales.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></span>
+          <div class="feat-text">
+            <strong>Financiamiento de corto plazo</strong>
+            <p>Para necesidades puntuales: compra de inventario, pagos a proveedores estratégicos, anticipo de campañas comerciales.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span>
+          <div class="feat-text">
+            <strong>Sobregiros pactados</strong>
+            <p>Cupos de sobregiro a tasas preferenciales, no las penalizadoras que aplica el banco automáticamente.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIO 02 -->
+<section id="factoring" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">02 / 06</div>
+        <h2>Factoring <em>& confirming</em></h2>
+        <p class="lead">Convierte tus cuentas por cobrar en liquidez inmediata, o financia los pagos a tus proveedores extendiendo plazos sin afectar la relación comercial.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Empresas que facturan a 30, 60 o 90 días y necesitan adelantar liquidez, o que quieren mejorar plazos de pago a proveedores sin perder descuentos.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Factoring" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></span>
+          <div class="feat-text">
+            <strong>Factoring tradicional</strong>
+            <p>Cedes tus facturas y recibes el monto adelantado descontando una tasa. Cotizamos con múltiples factoring para conseguir la mejor tasa según tu cartera.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span>
+          <div class="feat-text">
+            <strong>Confirming a proveedores</strong>
+            <p>Tu banco paga a tus proveedores al contado, tú pagas al banco en el plazo extendido. Mejora tu posición negociadora y tu flujo de caja.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+          <div class="feat-text">
+            <strong>Líneas de factoring rotativas</strong>
+            <p>Cupos preaprobados para operar de forma continua, en lugar de aprobar cada cesión por separado.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8l-8 8M8 8l8 8"/></svg></span>
+          <div class="feat-text">
+            <strong>Sin afectar tu capacidad crediticia</strong>
+            <p>El factoring es financiamiento fuera de balance: libera liquidez sin consumir cupos de tu línea de crédito tradicional.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIO 03 -->
+<section id="leasing" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">03 / 06</div>
+        <h2>Leasing <em>productivo</em></h2>
+        <p class="lead">Adquiere los bienes que tu empresa necesita sin descapitalizar la operación, con beneficios tributarios asociados y la opción de compra al final del contrato.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Empresas que necesitan maquinaria, vehículos comerciales o inmuebles industriales y prefieren financiar a 36-60 meses en lugar de descapitalizarse.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Leasing" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></span>
+          <div class="feat-text">
+            <strong>Leasing de maquinaria industrial</strong>
+            <p>Equipos productivos para manufactura, construcción, agroindustria. Plazos de hasta 60 meses con opción de compra simbólica al final.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M3 17h2M9 17h6M19 17h2"/><path d="M3 17V7a2 2 0 012-2h11l4 4v8"/></svg></span>
+          <div class="feat-text">
+            <strong>Leasing vehicular comercial</strong>
+            <p>Camiones, camionetas, flotas y vehículos comerciales. Cuotas íntegramente deducibles de impuestos como gasto operacional.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9v.01M9 12v.01M9 15v.01M9 18v.01M13 9v.01M13 12v.01M13 15v.01M13 18v.01M17 9v.01M17 12v.01M17 15v.01M17 18v.01"/></svg></span>
+          <div class="feat-text">
+            <strong>Leasing inmobiliario</strong>
+            <p>Bodegas, locales industriales, oficinas. Una alternativa al crédito hipotecario con ventajas tributarias relevantes.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <div class="feat-text">
+            <strong>Beneficios tributarios</strong>
+            <p>Las cuotas se reconocen como gasto, generando ahorro tributario. Te explicamos en detalle el impacto en tu carga impositiva.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIO 04 -->
+<section id="inversion" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">04 / 06</div>
+        <h2>Créditos <em>de inversión</em></h2>
+        <p class="lead">Financiamiento estructurado para proyectos de crecimiento, expansión y consolidación. Plazos y garantías diseñados a la medida del retorno esperado del proyecto.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Empresas con un proyecto concreto de inversión: apertura de sucursales, ampliación de planta, adquisición de competencia, nueva línea de negocio.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Cr%C3%A9dito%20de%20inversi%C3%B3n" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg></span>
+          <div class="feat-text">
+            <strong>Créditos comerciales de mediano plazo</strong>
+            <p>Estructuras a 3-7 años con períodos de gracia ajustables al flujo del proyecto. Para inversiones con maduración progresiva.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22h20M3 10h18M5 6l7-4 7 4M4 10v12M20 10v12M8 14v4M12 14v4M16 14v4"/></svg></span>
+          <div class="feat-text">
+            <strong>Financiamiento de proyectos</strong>
+            <p>Estructuras donde el flujo del proyecto sirve como fuente principal de pago, con garantías limitadas a los activos del propio proyecto.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg></span>
+          <div class="feat-text">
+            <strong>Mutuos hipotecarios comerciales</strong>
+            <p>Cuando hay garantía inmobiliaria disponible, accedemos a tasas más competitivas y plazos extendidos.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M5 5l14 14M5 19l14-14"/></svg></span>
+          <div class="feat-text">
+            <strong>Estructuración a medida</strong>
+            <p>Diseñamos la combinación de plazos, garantías, períodos de gracia y formas de pago que mejor calzan con el proyecto y minimizan el costo total.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIO 05 -->
+<section id="reestructuracion" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">05 / 06</div>
+        <h2>Reestructuración <em>de deuda</em></h2>
+        <p class="lead">Cuando los pasivos están comiendo el flujo de caja, lo importante es reordenar. Renegociamos y consolidamos deudas para reducir el costo financiero y liberar capacidad operativa.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Empresas con múltiples créditos a plazos cortos y tasas altas, o con dificultades transitorias de flujo que requieren reorganizar pasivos antes de que escale.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Reestructuraci%C3%B3n%20de%20deuda" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span>
+          <div class="feat-text">
+            <strong>Consolidación de pasivos</strong>
+            <p>Unificamos múltiples deudas en un solo crédito con mejor tasa y plazo más extendido. Una cuota, un acreedor, mejor caja.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></span>
+          <div class="feat-text">
+            <strong>Renegociación de tasa y plazo</strong>
+            <p>Tomamos tus créditos actuales y los renegociamos con los bancos, o los trasladamos a una institución con mejores condiciones.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></span>
+          <div class="feat-text">
+            <strong>Diagnóstico financiero integral</strong>
+            <p>Antes de reestructurar, analizamos tu situación completa: caja proyectada, calce de pasivos, sensibilidad a tasas. Solo así la solución es sostenible.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <div class="feat-text">
+            <strong>Estrategia con criterio</strong>
+            <p>No siempre la reestructuración es la salida. Si hay alternativas más eficientes, te las planteamos. Nuestra prioridad es que la empresa salga fortalecida.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIO 06 -->
+<section id="corfo" class="service-block">
+  <div class="wrap">
+    <div class="service-block-grid">
+      <div class="meta reveal">
+        <div class="num">06 / 06</div>
+        <h2>Corfo <em>& Fogape</em></h2>
+        <p class="lead">El Estado chileno ofrece líneas de garantía y programas de apoyo que muchas pymes desconocen o subutilizan. Te abrimos el acceso a las herramientas correctas.</p>
+        <div class="for-who">
+          <h4>Para quién</h4>
+          <p>Pymes con proyectos de inversión, exportadores, empresas en sectores priorizados (turismo, agroindustria, manufactura), o que requieren garantías estatales para acceder a crédito.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html?servicio=Corfo%20Fogape" class="btn btn-primary">Solicitar asesoría <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <ul class="features reveal-stagger">
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <div class="feat-text">
+            <strong>Fogape — Fondo de Garantía</strong>
+            <p>Garantía estatal que permite a la pyme acceder a crédito incluso sin colaterales propios suficientes. Aplicable a la mayoría de productos bancarios.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg></span>
+          <div class="feat-text">
+            <strong>Líneas Corfo de financiamiento</strong>
+            <p>Programas para inversión, innovación, exportación y eficiencia energética. Tasas subsidiadas y condiciones que el mercado bancario no ofrece.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>
+          <div class="feat-text">
+            <strong>Identificación de programas aplicables</strong>
+            <p>El catálogo público tiene decenas de instrumentos. Identificamos cuáles aplican a tu empresa según sector, tamaño, región y propósito del financiamiento.</p>
+          </div>
+        </li>
+        <li>
+          <span class="feat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
+          <div class="feat-text">
+            <strong>Gestión y postulación</strong>
+            <p>Preparamos la documentación, postulamos al programa y gestionamos con el banco o intermediario financiero. Tú te enfocas en tu empresa.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="wrap reveal">
+    <h2>¿No sabes cuál de los seis <em>te conviene?</em></h2>
+    <p>En 30 minutos de conversación tendremos claridad sobre qué solución calza con tu empresa.</p>
+    <div class="cta-banner-ctas">
+      <a href="contacto.html" class="btn btn-primary">Agendar diagnóstico <span class="arrow">→</span></a>
+      <a href="proceso.html" class="btn btn-ghost">Ver nuestro proceso</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">capital pyme<span class="logo-dot"></span></a>
+        <p>Asesoría financiera independiente para pequeñas y medianas empresas en Chile. Parte de Asfinc Asesoría Financiera SpA.</p>
+      </div>
+      <div>
+        <h5>Servicios</h5>
+        <ul>
+          <li><a href="servicios.html#trabajo">Capital de trabajo</a></li>
+          <li><a href="servicios.html#factoring">Factoring</a></li>
+          <li><a href="servicios.html#leasing">Leasing</a></li>
+          <li><a href="servicios.html#corfo">Corfo y Fogape</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="proceso.html">Proceso</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="mailto:contacto@capitalpyme.cl">contacto@capitalpyme.cl</a></li>
+          <li><a href="tel:+56900000000">+56 9 0000 0000</a></li>
+          <li>Santiago, Chile</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>© <span id="year">2026</span> Capital Pyme · Asfinc Asesoría Financiera SpA</span>
+      <span>Hecho con criterio en Santiago de Chile</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/56900000000" class="wa-float" aria-label="WhatsApp">
+  <span class="wa-icon">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </span>
+  <span class="wa-text">Habla con un asesor</span>
+</a>
+
+<script src="script.js"></script>
+</body>
+</html>
