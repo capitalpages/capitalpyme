@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Pyme 2.0 — Prototipo v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-900: #0a1628;
+    --navy-800: #102742;
+    --navy-700: #1a3a5c;
+    --navy-50:  #f4f7fb;
+    --cyan:     #14b8c4;
+    --cyan-dim: #0f8a93;
+    --cyan-soft:#e0f7f9;
+    --gold:     #d4a04a;
+    --wzp:      #25d366;
+    --wzp-dark: #128c7e;
+    --ink:      #0a1628;
+    --ink-60:   #5a6b7e;
+    --ink-40:   #94a0ae;
+    --line:     #e4e9f0;
+    --bg:       #fafbfc;
+    --white:    #ffffff;
+    --success:  #2d9d6f;
+    --warn:     #e08c3c;
+    --danger:   #d04848;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* --------- TOP NAV --------- */
+  .topnav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,251,252,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topnav-inner {
+    max-width: 1320px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    color: var(--navy-900); text-decoration: none; cursor: pointer;
+  }
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--navy-800), var(--cyan));
+    border-radius: 8px;
+    display: grid; place-items: center;
+    color: white; font-weight: 700; font-size: 14px;
+    font-family: 'IBM Plex Sans';
+  }
+  .logo span { color: var(--cyan-dim); font-weight: 400; }
+  .nav-tabs { display: flex; gap: 4px; background: var(--white); padding: 4px; border-radius: 12px; border: 1px solid var(--line); }
+  .nav-tab {
+    border: none; background: transparent;
+    padding: 8px 16px; font-size: 13px; font-weight: 500;
+    color: var(--ink-60); cursor: pointer;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .nav-tab:hover { color: var(--navy-900); }
+  .nav-tab.active { background: var(--navy-900); color: white; }
+  .nav-cta { display: flex; gap: 10px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 10px;
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-ghost { background: transparent; color: var(--navy-800); border: 1px solid var(--line); }
+  .btn-ghost:hover { background: var(--white); border-color: var(--navy-800); }
+  .btn-primary { background: var(--navy-900); color: white; }
+  .btn-primary:hover { background: var(--navy-700); transform: translateY(-1px); }
+  .btn-cyan { background: var(--cyan); color: var(--navy-900); font-weight: 600; }
+  .btn-cyan:hover { background: var(--cyan-dim); color: white; transform: translateY(-1px); }
+  .btn-wzp { background: var(--wzp); color: white; font-weight: 600; }
+  .btn-wzp:hover { background: var(--wzp-dark); }
+  .btn-lg { padding: 14px 28px; font-size: 15px; border-radius: 12px; }
+
+  /* --------- PAGES --------- */
+  .page { display: none; animation: fadeIn 0.4s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* --------- LANDING --------- */
+  .hero {
+    position: relative;
+    max-width: 1320px; margin: 0 auto;
+    padding: 80px 40px 100px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px;
+    background: var(--cyan-soft);
+    color: var(--cyan-dim);
+    border-radius: 100px;
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--cyan); border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(20, 184, 196, 0.2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(20, 184, 196, 0); } }
+  .hero h1 {
+    font-size: clamp(46px, 5.5vw, 78px);
+    color: var(--navy-900);
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic; font-weight: 400;
+    color: var(--cyan-dim);
+    font-family: 'Fraunces', serif;
+  }
+  .hero-sub {
+    font-size: 19px; color: var(--ink-60);
+    max-width: 540px; margin-bottom: 36px;
+    line-height: 1.5;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-trust {
+    margin-top: 48px; display: flex; gap: 32px;
+    padding-top: 28px; border-top: 1px solid var(--line);
+  }
+  .trust-stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px; font-weight: 500;
+    color: var(--navy-900); display: block;
+  }
+  .trust-stat .lbl {
+    font-size: 12px; color: var(--ink-60);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* Hero visual: stacked cards mock */
+  .hero-visual {
+    position: relative; height: 540px;
+  }
+  .stack-card {
+    position: absolute; background: white;
+    border-radius: 18px; padding: 22px;
+    box-shadow: 0 20px 60px -20px rgba(10, 22, 40, 0.18);
+    border: 1px solid var(--line);
+  }
+  .stack-card-1 {
+    top: 0; right: 0; width: 320px;
+    transform: rotate(2deg);
+    background: var(--navy-900); color: white;
+    border-color: var(--navy-800);
+  }
+  .stack-card-2 {
+    top: 140px; left: 0; width: 300px;
+    transform: rotate(-3deg);
+    z-index: 2;
+  }
+  .stack-card-3 {
+    bottom: 0; right: 30px; width: 280px;
+    transform: rotate(4deg);
+  }
+  .sc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-40); margin-bottom: 8px; }
+  .stack-card-1 .sc-label { color: rgba(255,255,255,0.5); }
+  .sc-big { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; margin-bottom: 4px; }
+  .sc-mini { font-size: 13px; color: var(--ink-60); }
+  .stack-card-1 .sc-mini { color: rgba(255,255,255,0.6); }
+
+  .sparkline { display: flex; align-items: end; gap: 3px; height: 40px; margin-top: 12px; }
+  .sparkline div {
+    flex: 1; background: var(--cyan);
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+
+  .ratio-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--line); }
+  .ratio-row:last-child { border: none; }
+  .ratio-row b { font-weight: 600; }
+  .badge-ok { background: #e6f6ee; color: var(--success); padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 500; }
+
+  /* sections */
+  section { max-width: 1320px; margin: 0 auto; padding: 80px 40px; }
+  .section-head { margin-bottom: 48px; max-width: 720px; }
+  .section-kicker {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--cyan-dim); font-weight: 600; margin-bottom: 16px;
+  }
+  .section-title { font-size: clamp(36px, 4vw, 52px); color: var(--navy-900); margin-bottom: 16px; }
+  .section-title em { font-style: italic; font-weight: 400; color: var(--cyan-dim); }
+  .section-sub { font-size: 17px; color: var(--ink-60); }
+
+  /* steps */
+  .steps {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+    margin-top: 32px;
+  }
+  .step-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .step-card:hover { border-color: var(--cyan); transform: translateY(-4px); box-shadow: 0 12px 32px -16px rgba(20, 184, 196, 0.3); }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px; font-weight: 500;
+    color: var(--cyan); line-height: 1;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .step-title { font-family: 'IBM Plex Sans'; font-weight: 600; font-size: 15px; color: var(--navy-900); margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--ink-60); }
+
+  /* products grid landing */
+  .products-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 32px;
+  }
+  .product-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 18px; padding: 28px;
+    transition: all 0.3s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .product-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--cyan); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .product-card:hover { transform: translateY(-4px); border-color: transparent; box-shadow: 0 20px 50px -20px rgba(10, 22, 40, 0.15); }
+  .product-card:hover::after { transform: scaleX(1); }
+  .product-icon {
+    width: 48px; height: 48px;
+    background: var(--cyan-soft); color: var(--cyan-dim);
+    border-radius: 12px; display: grid; place-items: center;
+    font-size: 22px; margin-bottom: 20px;
+  }
+  .product-card h3 { font-size: 22px; margin-bottom: 8px; color: var(--navy-900); }
+  .product-card p { font-size: 14px; color: var(--ink-60); margin-bottom: 16px; }
+  .product-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 3px 8px; background: var(--navy-50); color: var(--navy-800); border-radius: 100px; font-weight: 500; }
+  .tag-fee { background: var(--cyan-soft); color: var(--cyan-dim); }
+
+  /* --------- ONBOARDING --------- */
+  .onboard-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+  .onboard-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+  .onboard-back { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-60); text-decoration: none; font-size: 13px; cursor: pointer; }
+  .onboard-back:hover { color: var(--navy-900); }
+  .save-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; background: #e6f6ee; color: var(--success);
+    border-radius: 100px; font-size: 12px; font-weight: 500;
+  }
+  .save-pill::before { content: ''; width: 6px; height: 6px; background: var(--success); border-radius: 50%; }
+
+  .progress {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
+    margin-bottom: 48px;
+  }
+  .progress-step {
+    height: 4px; background: var(--line); border-radius: 100px;
+    position: relative; cursor: pointer;
+  }
+  .progress-step.done { background: var(--cyan); }
+  .progress-step.active { background: var(--navy-900); }
+  .progress-step span {
+    position: absolute; top: 14px; left: 0;
+    font-size: 11px; color: var(--ink-40);
+    font-weight: 500; letter-spacing: 0.04em;
+  }
+  .progress-step.active span, .progress-step.done span { color: var(--navy-900); }
+
+  .onboard-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 24px; padding: 56px;
+    box-shadow: 0 1px 3px rgba(10, 22, 40, 0.03);
+  }
+  .ob-step-num {
+    font-family: 'JetBrains Mono';
+    font-size: 12px; color: var(--cyan-dim); font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .ob-title { font-size: 36px; color: var(--navy-900); margin-bottom: 12px; }
+  .ob-title em { font-style: italic; font-weight: 400; color: var(--cyan-dim); }
+  .ob-desc { font-size: 16px; color: var(--ink-60); margin-bottom: 40px; max-width: 640px; }
+
+  .upload-zone {
+    border: 2px dashed var(--line);
+    border-radius: 16px; padding: 48px;
+    text-align: center; cursor: pointer;
+    transition: all 0.3s; background: #fafbfc;
+  }
+  .upload-zone:hover { border-color: var(--cyan); background: var(--cyan-soft); }
+  .upload-zone.uploaded { border-style: solid; border-color: var(--success); background: #f4faf6; }
+  .upload-icon {
+    width: 56px; height: 56px;
+    background: var(--cyan-soft); color: var(--cyan-dim);
+    border-radius: 14px; display: grid; place-items: center;
+    margin: 0 auto 16px; font-size: 24px;
+  }
+  .upload-zone.uploaded .upload-icon { background: #e6f6ee; color: var(--success); }
+  .upload-title { font-weight: 600; color: var(--navy-900); margin-bottom: 6px; font-size: 15px; }
+  .upload-hint { font-size: 13px; color: var(--ink-60); }
+  .upload-meta { margin-top: 16px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--ink-40); }
+
+  .multi-upload { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .form-field { margin-bottom: 24px; }
+  .form-field label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--navy-800); margin-bottom: 8px;
+  }
+  .form-field input, .form-field textarea, .form-field select {
+    width: 100%; padding: 14px 18px;
+    border: 1px solid var(--line); border-radius: 12px;
+    font-family: inherit; font-size: 15px; color: var(--navy-900);
+    background: white;
+    transition: all 0.2s;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+    outline: none; border-color: var(--cyan);
+    box-shadow: 0 0 0 4px var(--cyan-soft);
+  }
+  .form-field textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+  .form-field-hint { font-size: 12px; color: var(--ink-40); margin-top: 6px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .choice-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  .choice-card {
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; cursor: pointer; transition: all 0.2s;
+    background: white;
+  }
+  .choice-card:hover { border-color: var(--cyan); }
+  .choice-card.selected { border-color: var(--navy-900); background: var(--navy-50); }
+  .choice-card.selected::before {
+    content: '✓'; float: right; width: 24px; height: 24px;
+    background: var(--navy-900); color: white;
+    border-radius: 50%; display: grid; place-items: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .choice-icon { font-size: 22px; margin-bottom: 12px; }
+  .choice-title { font-weight: 600; color: var(--navy-900); margin-bottom: 4px; font-size: 14px; }
+  .choice-desc { font-size: 12px; color: var(--ink-60); }
+
+  .amount-input {
+    display: flex; align-items: center;
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 0 18px; background: white;
+  }
+  .amount-input:focus-within { border-color: var(--cyan); box-shadow: 0 0 0 4px var(--cyan-soft); }
+  .amount-input .currency { font-family: 'JetBrains Mono'; color: var(--ink-40); font-size: 14px; }
+  .amount-input input { border: none; padding: 14px 8px; font-size: 18px; font-weight: 500; flex: 1; font-family: 'Fraunces'; background: transparent; }
+  .amount-input input:focus { outline: none; }
+
+  .ob-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line);
+  }
+  .ob-foot-info { font-size: 13px; color: var(--ink-60); }
+
+  /* Lightweight account screen */
+  .account-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-bottom: 28px;
+  }
+  .auth-options {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .auth-btn {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; border: 1px solid var(--line);
+    background: white; border-radius: 12px;
+    cursor: pointer; transition: all 0.2s;
+    font-family: inherit; font-size: 14px; color: var(--navy-900);
+    text-align: left;
+  }
+  .auth-btn:hover { border-color: var(--navy-900); }
+  .auth-btn .icon { width: 24px; height: 24px; display: grid; place-items: center; font-size: 18px; }
+  .auth-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0; font-size: 12px; color: var(--ink-40);
+  }
+  .auth-divider::before, .auth-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+
+  /* --------- DASHBOARD --------- */
+  .dash-wrap {
+    max-width: 1320px; margin: 0 auto;
+    padding: 40px 40px 80px;
+    display: grid; grid-template-columns: 240px 1fr; gap: 40px;
+  }
+  .dash-side {
+    position: sticky; top: 100px; align-self: start;
+  }
+  .side-section { margin-bottom: 32px; }
+  .side-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-40); font-weight: 600; margin-bottom: 12px; }
+  .side-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 10px;
+    color: var(--ink-60); cursor: pointer;
+    font-size: 14px; transition: all 0.2s;
+    text-decoration: none;
+  }
+  .side-item:hover { background: white; color: var(--navy-900); }
+  .side-item.active { background: var(--navy-900); color: white; }
+  .side-item .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+
+  .dash-main { min-width: 0; }
+  .dash-hero {
+    background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+    border-radius: 24px; padding: 40px; color: white;
+    margin-bottom: 24px; position: relative; overflow: hidden;
+  }
+  .dash-hero::before {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(20, 184, 196, 0.25), transparent 70%);
+    border-radius: 50%;
+  }
+  .dash-hero-content { position: relative; }
+  .dh-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 32px; }
+  .dh-company {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5); margin-bottom: 8px;
+  }
+  .dh-name { font-family: 'Fraunces'; font-size: 32px; font-weight: 500; }
+  .dh-rut { font-family: 'JetBrains Mono'; font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .dh-score { text-align: right; }
+  .score-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%; background: rgba(20, 184, 196, 0.15);
+    border: 3px solid var(--cyan);
+    display: grid; place-items: center;
+    font-family: 'Fraunces'; font-size: 28px; font-weight: 600;
+    color: var(--cyan); margin-left: auto;
+  }
+  .dh-score-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+  .dh-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .dh-stat .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+  .dh-stat .val { font-family: 'Fraunces'; font-size: 26px; font-weight: 500; }
+  .dh-stat .delta { font-size: 12px; color: var(--cyan); margin-top: 4px; }
+
+  .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .dash-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 18px; padding: 28px;
+  }
+  .dc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .dc-title { font-family: 'Fraunces'; font-size: 20px; font-weight: 500; color: var(--navy-900); }
+  .dc-mini { font-size: 12px; color: var(--ink-60); }
+
+  /* mini chart */
+  .chart-wrap { height: 200px; position: relative; margin-top: 12px; }
+  .chart-bars { display: flex; align-items: end; gap: 8px; height: 100%; padding: 0 4px; }
+  .chart-bar {
+    flex: 1; background: linear-gradient(to top, var(--navy-700), var(--cyan));
+    border-radius: 6px 6px 0 0; min-height: 4px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .chart-bar:hover { opacity: 0.85; }
+  .chart-bar .lbl { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 10px; font-family: 'JetBrains Mono'; color: var(--ink-40); white-space: nowrap; }
+
+  .ratios-list { display: flex; flex-direction: column; gap: 12px; }
+  .ratio-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid var(--line);
+  }
+  .ratio-item:last-child { border: none; padding-bottom: 0; }
+  .ratio-name { font-size: 13px; color: var(--ink-60); }
+  .ratio-val { display: flex; align-items: center; gap: 8px; }
+  .ratio-num { font-family: 'Fraunces'; font-size: 18px; font-weight: 500; color: var(--navy-900); }
+  .badge-warn { background: #fff5e6; color: var(--warn); padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 500; }
+  .badge-danger { background: #fceaea; color: var(--danger); padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 500; }
+
+  .strengths-card { background: linear-gradient(135deg, #f4faf6, white); border-color: #d4ead9; }
+  .considerations-card { background: linear-gradient(135deg, #fef7ec, white); border-color: #f0dfb8; }
+  .strengths-card .dc-title { color: var(--success); }
+  .considerations-card .dc-title { color: var(--warn); }
+  .insight-list { list-style: none; }
+  .insight-list li {
+    position: relative; padding: 10px 0 10px 24px;
+    font-size: 13px; line-height: 1.6;
+    border-bottom: 1px dashed rgba(0,0,0,0.05);
+  }
+  .insight-list li:last-child { border: none; }
+  .insight-list li::before {
+    content: '→'; position: absolute; left: 0; top: 10px;
+    font-weight: 600; color: var(--cyan-dim);
+  }
+  .strengths-card .insight-list li::before { content: '✓'; color: var(--success); }
+  .considerations-card .insight-list li::before { content: '!'; color: var(--warn); }
+
+  /* recommendation banner */
+  .recommend {
+    background: var(--navy-900); border-radius: 24px;
+    padding: 40px; color: white;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px;
+    align-items: center; margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .recommend::before {
+    content: 'APTA';
+    position: absolute; right: -30px; top: -20px;
+    font-family: 'Fraunces'; font-style: italic;
+    font-size: 220px; font-weight: 600;
+    color: rgba(20, 184, 196, 0.08);
+    line-height: 1;
+  }
+  .rec-content { position: relative; }
+  .rec-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan); margin-bottom: 12px; font-weight: 600; }
+  .rec-title { font-family: 'Fraunces'; font-size: 32px; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
+  .rec-desc { font-size: 14px; color: rgba(255,255,255,0.75); margin-bottom: 24px; }
+  .rec-conds { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 20px; position: relative; }
+  .rec-conds-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+  .rec-conds ol { padding-left: 18px; }
+  .rec-conds li { font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+
+  /* CONTRACT — fee structure visual */
+  .contract-panel {
+    background: white; border-radius: 24px; border: 1px solid var(--line);
+    padding: 40px; margin-bottom: 24px;
+  }
+  .cp-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 32px; gap: 20px; flex-wrap: wrap; }
+  .cp-head h2 { font-size: 32px; color: var(--navy-900); margin-bottom: 8px; }
+  .cp-head p { color: var(--ink-60); font-size: 15px; max-width: 480px; }
+  .cp-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: start; }
+
+  .fee-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    background: var(--navy-50); border-radius: 16px; overflow: hidden;
+  }
+  .fee-table thead th {
+    text-align: left; padding: 14px 18px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-60); font-weight: 600;
+    background: white; border-bottom: 1px solid var(--line);
+  }
+  .fee-table tbody td {
+    padding: 14px 18px; font-size: 13px;
+    color: var(--navy-900); border-bottom: 1px solid var(--line);
+  }
+  .fee-table tbody tr:last-child td { border-bottom: none; }
+  .fee-table tbody td b { font-family: 'Fraunces'; font-weight: 500; font-size: 15px; color: var(--cyan-dim); }
+  .fee-table .product-cell { display: flex; align-items: center; gap: 10px; }
+  .fee-table .product-cell .ico { width: 28px; height: 28px; border-radius: 8px; background: var(--cyan-soft); display: grid; place-items: center; font-size: 14px; }
+
+  .fee-summary {
+    background: var(--navy-900); border-radius: 18px;
+    padding: 28px; color: white;
+    position: relative; overflow: hidden;
+  }
+  .fee-summary::before {
+    content: ''; position: absolute; top: -40%; right: -20%;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(20,184,196,0.3), transparent 70%);
+    border-radius: 50%;
+  }
+  .fee-summary-inner { position: relative; }
+  .fee-summary .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
+  .fee-summary .big { font-family: 'Fraunces'; font-size: 42px; font-weight: 500; line-height: 1; margin-bottom: 6px; }
+  .fee-summary .mini { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 24px; }
+  .fee-breakdown {
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fee-row { display: flex; justify-content: space-between; font-size: 13px; }
+  .fee-row span:first-child { color: rgba(255,255,255,0.6); }
+  .fee-row span:last-child { font-family: 'JetBrains Mono'; color: white; }
+  .fee-row.total { padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15); font-weight: 600; }
+  .fee-row.total span:last-child { color: var(--cyan); }
+
+  .fee-note {
+    background: var(--cyan-soft); border-left: 3px solid var(--cyan);
+    padding: 14px 18px; border-radius: 10px;
+    font-size: 13px; color: var(--navy-800);
+    margin-top: 20px;
+  }
+  .fee-note b { color: var(--navy-900); }
+
+  .sign-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+
+  /* --------- PRODUCTS PAGE --------- */
+  .products-wrap { max-width: 1320px; margin: 0 auto; padding: 60px 40px 80px; }
+  .products-hero {
+    margin-bottom: 48px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: end;
+  }
+  .filters-bar {
+    display: flex; gap: 8px; margin-bottom: 24px;
+    padding: 16px 20px; background: white;
+    border: 1px solid var(--line); border-radius: 14px;
+    align-items: center; flex-wrap: wrap;
+  }
+  .filter-label { font-size: 12px; color: var(--ink-60); font-weight: 500; margin-right: 4px; }
+  .filter-chip {
+    padding: 6px 14px; border: 1px solid var(--line);
+    border-radius: 100px; font-size: 13px;
+    background: white; cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .filter-chip:hover { border-color: var(--navy-900); }
+  .filter-chip.active { background: var(--navy-900); color: white; border-color: var(--navy-900); }
+
+  .products-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .prod-detail-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 20px; padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .prod-detail-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10, 22, 40, 0.15); }
+  .prod-featured {
+    border-color: var(--cyan); background: linear-gradient(135deg, var(--cyan-soft) 0%, white 30%);
+  }
+  .prod-featured::before {
+    content: 'Recomendado para ti';
+    position: absolute; top: -10px; left: 24px;
+    background: var(--cyan); color: var(--navy-900);
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .pd-icon-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px; }
+  .pd-icon {
+    width: 52px; height: 52px;
+    background: var(--navy-900); color: var(--cyan);
+    border-radius: 14px; display: grid; place-items: center;
+    font-size: 22px;
+  }
+  .pd-rate { font-family: 'Fraunces'; font-size: 14px; color: var(--ink-60); text-align: right; }
+  .pd-rate b { display: block; font-size: 26px; color: var(--navy-900); font-weight: 500; }
+  .pd-title { font-size: 22px; color: var(--navy-900); margin-bottom: 6px; }
+  .pd-issuer { font-size: 13px; color: var(--ink-60); margin-bottom: 16px; }
+  .pd-features { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+  .pd-feature { display: flex; justify-content: space-between; font-size: 13px; }
+  .pd-feature span:first-child { color: var(--ink-60); }
+  .pd-feature span:last-child { color: var(--navy-900); font-weight: 500; }
+  .pd-fee-bar {
+    background: var(--navy-50); border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px;
+  }
+  .pd-fee-bar .fl { color: var(--ink-60); }
+  .pd-fee-bar .fv { color: var(--navy-900); font-weight: 600; font-family: 'JetBrains Mono'; }
+  .pd-actions { display: flex; gap: 8px; }
+  .pd-actions .btn { flex: 1; justify-content: center; }
+
+  /* --------- BLOG --------- */
+  .blog-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 40px 80px; }
+  .blog-hero { text-align: center; margin-bottom: 60px; }
+  .blog-hero h1 { font-size: clamp(48px, 6vw, 72px); color: var(--navy-900); margin-bottom: 16px; }
+  .blog-hero h1 em { font-style: italic; color: var(--cyan-dim); font-weight: 400; }
+  .blog-hero p { font-size: 18px; color: var(--ink-60); max-width: 560px; margin: 0 auto; }
+
+  .blog-feat {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px;
+    background: white; border: 1px solid var(--line);
+    border-radius: 24px; padding: 48px;
+    margin-bottom: 48px; align-items: center;
+  }
+  .blog-feat-img {
+    aspect-ratio: 4/3; border-radius: 16px;
+    background:
+      radial-gradient(at 30% 40%, var(--cyan) 0%, transparent 50%),
+      radial-gradient(at 70% 60%, var(--navy-700) 0%, transparent 60%),
+      linear-gradient(135deg, var(--navy-900), var(--navy-800));
+    position: relative; overflow: hidden;
+  }
+  .blog-feat-img::after {
+    content: 'CP';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Fraunces'; font-size: 96px; font-weight: 600;
+    color: rgba(255,255,255,0.1); font-style: italic;
+  }
+  .blog-cat {
+    display: inline-block; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--cyan-dim); font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .blog-feat h2 { font-size: 36px; color: var(--navy-900); margin-bottom: 16px; line-height: 1.15; }
+  .blog-feat p { font-size: 16px; color: var(--ink-60); margin-bottom: 24px; }
+  .blog-meta { display: flex; gap: 16px; font-size: 13px; color: var(--ink-40); align-items: center; }
+  .blog-meta span::after { content: '·'; margin-left: 16px; color: var(--ink-40); }
+  .blog-meta span:last-child::after { display: none; }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
+  .blog-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 18px; overflow: hidden;
+    transition: all 0.3s; cursor: pointer;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(10, 22, 40, 0.15); }
+  .blog-thumb {
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, var(--navy-700), var(--cyan));
+    position: relative; overflow: hidden;
+  }
+  .blog-thumb-2 { background: linear-gradient(135deg, #d4a04a, #e8c87a); }
+  .blog-thumb-3 { background: linear-gradient(135deg, var(--navy-900), var(--navy-700)); }
+  .blog-thumb-4 { background: linear-gradient(135deg, #2d9d6f, #84cdb2); }
+  .blog-thumb-5 { background: linear-gradient(135deg, #d04848, #f08080); }
+  .blog-thumb-6 { background: linear-gradient(135deg, var(--cyan-dim), var(--cyan)); }
+  .blog-thumb::after {
+    content: attr(data-letter);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Fraunces'; font-style: italic; font-size: 72px;
+    color: rgba(255,255,255,0.2); font-weight: 600;
+  }
+  .blog-body { padding: 24px; }
+  .blog-body h3 { font-size: 20px; color: var(--navy-900); margin-bottom: 8px; line-height: 1.25; }
+  .blog-body p { font-size: 14px; color: var(--ink-60); margin-bottom: 16px; }
+
+  /* education academy */
+  .academy {
+    background: var(--navy-900); border-radius: 24px;
+    padding: 56px; color: white; position: relative; overflow: hidden;
+  }
+  .academy::before {
+    content: ''; position: absolute; bottom: -100px; left: -50px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(20, 184, 196, 0.2), transparent 70%);
+    border-radius: 50%;
+  }
+  .academy-content { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+  .academy h2 { font-size: 42px; margin-bottom: 16px; }
+  .academy h2 em { font-style: italic; color: var(--cyan); font-weight: 400; }
+  .academy > .academy-content > div > p { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .academy-modules { display: flex; flex-direction: column; gap: 12px; }
+  .academy-mod {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .academy-mod:hover { background: rgba(20, 184, 196, 0.1); border-color: var(--cyan); }
+  .academy-mod-num { font-family: 'Fraunces'; font-style: italic; font-size: 24px; color: var(--cyan); font-weight: 500; min-width: 30px; }
+  .academy-mod-text { flex: 1; }
+  .academy-mod-title { font-weight: 500; font-size: 14px; }
+  .academy-mod-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .academy-mod-arrow { color: rgba(255,255,255,0.4); }
+
+  /* --------- FOOTER --------- */
+  footer {
+    margin-top: 80px;
+    background: var(--navy-900); color: rgba(255,255,255,0.7);
+    padding: 60px 40px 30px;
+  }
+  .footer-inner {
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;
+    padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-inner h4 { color: white; font-family: 'IBM Plex Sans'; font-weight: 600; font-size: 14px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .footer-inner a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; display: block; padding: 4px 0; cursor: pointer; }
+  .footer-inner a:hover { color: var(--cyan); }
+  .footer-tag { font-family: 'Fraunces'; font-style: italic; font-size: 28px; color: white; font-weight: 400; margin-bottom: 16px; line-height: 1.3; }
+  .footer-tag em { color: var(--cyan); }
+  .footer-bottom {
+    max-width: 1320px; margin: 30px auto 0;
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: rgba(255,255,255,0.4);
+  }
+
+  /* ====== CHAT BOT + WHATSAPP FLOATING ====== */
+  .float-stack {
+    position: fixed; bottom: 24px; right: 24px;
+    z-index: 200;
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: flex-end;
+  }
+  .float-btn {
+    border: none; cursor: pointer;
+    padding: 14px 20px; border-radius: 100px;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+    transition: all 0.2s;
+  }
+  .float-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -10px rgba(0,0,0,0.4); }
+  .float-bot {
+    background: var(--navy-900); color: white;
+  }
+  .float-bot .ico {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--cyan); color: var(--navy-900);
+    display: grid; place-items: center; font-size: 14px;
+  }
+  .float-wzp {
+    background: var(--wzp); color: white;
+  }
+  .float-wzp .ico {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: white; color: var(--wzp);
+    display: grid; place-items: center; font-size: 14px; font-weight: 700;
+  }
+  .float-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--danger); color: white;
+    font-size: 10px; font-weight: 700;
+    display: grid; place-items: center;
+    border: 2px solid var(--bg);
+  }
+
+  /* Chat panel */
+  .chat-panel {
+    position: fixed; bottom: 24px; right: 24px;
+    z-index: 201;
+    width: 380px; max-height: 600px;
+    background: white; border-radius: 24px;
+    box-shadow: 0 25px 60px -15px rgba(0,0,0,0.35);
+    display: none; flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .chat-panel.open { display: flex; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .chat-head {
+    background: var(--navy-900); color: white;
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 12px;
+    position: relative;
+  }
+  .chat-head::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 0%, rgba(20,184,196,0.25), transparent 60%);
+    pointer-events: none;
+  }
+  .chat-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--cyan-dim));
+    display: grid; place-items: center;
+    font-family: 'Fraunces'; font-style: italic; font-weight: 600; font-size: 20px;
+    color: var(--navy-900);
+    position: relative; z-index: 1;
+  }
+  .chat-avatar::after {
+    content: ''; position: absolute; bottom: 0; right: 0;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--success); border: 2px solid var(--navy-900);
+  }
+  .chat-head-text { flex: 1; position: relative; z-index: 1; }
+  .chat-head-text .name { font-weight: 600; font-size: 15px; }
+  .chat-head-text .status { font-size: 11px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 6px; }
+  .chat-head-text .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+  .chat-close {
+    background: rgba(255,255,255,0.1); color: white;
+    border: none; width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 16px;
+    position: relative; z-index: 1;
+  }
+  .chat-close:hover { background: rgba(255,255,255,0.2); }
+
+  .chat-body {
+    flex: 1; overflow-y: auto;
+    padding: 20px; display: flex; flex-direction: column; gap: 12px;
+    background: var(--bg);
+  }
+  .chat-msg {
+    max-width: 80%; padding: 10px 14px;
+    border-radius: 16px; font-size: 14px;
+    line-height: 1.45;
+  }
+  .chat-msg.bot {
+    background: white; color: var(--navy-900);
+    border: 1px solid var(--line);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+  }
+  .chat-msg.user {
+    background: var(--navy-900); color: white;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+  }
+  .chat-msg.bot .ts, .chat-msg.user .ts {
+    display: block; font-size: 10px; color: var(--ink-40);
+    margin-top: 4px; font-family: 'JetBrains Mono';
+  }
+  .chat-msg.user .ts { color: rgba(255,255,255,0.5); }
+
+  .chat-quick {
+    padding: 0 20px 12px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .quick-btn {
+    background: white; border: 1px solid var(--line);
+    padding: 8px 14px; border-radius: 100px;
+    font-family: inherit; font-size: 12px; color: var(--navy-800);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .quick-btn:hover { background: var(--navy-900); color: white; border-color: var(--navy-900); }
+
+  .chat-foot {
+    padding: 16px 20px;
+    border-top: 1px solid var(--line);
+    background: white;
+  }
+  .chat-input-row {
+    display: flex; gap: 8px; align-items: center;
+    background: var(--bg); border-radius: 100px;
+    padding: 6px 6px 6px 18px;
+  }
+  .chat-input-row input {
+    flex: 1; border: none; background: transparent;
+    font-family: inherit; font-size: 14px; color: var(--navy-900);
+    padding: 8px 0;
+  }
+  .chat-input-row input:focus { outline: none; }
+  .chat-send {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--cyan); color: var(--navy-900);
+    border: none; cursor: pointer; font-weight: 700;
+    display: grid; place-items: center;
+    transition: all 0.2s;
+  }
+  .chat-send:hover { background: var(--cyan-dim); color: white; }
+  .chat-handoff {
+    margin-top: 12px; padding: 10px 14px;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    font-size: 12px; color: var(--wzp-dark);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .chat-handoff a { color: var(--wzp-dark); font-weight: 600; text-decoration: underline; cursor: pointer; }
+
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { height: 400px; }
+    .steps, .products-grid, .products-list, .blog-grid, .multi-upload { grid-template-columns: repeat(2, 1fr); }
+    .dash-wrap { grid-template-columns: 1fr; }
+    .dash-side { position: static; }
+    .dh-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-grid, .recommend, .cp-body, .blog-feat, .academy-content, .products-hero, .account-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .progress { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .topnav-inner { padding: 12px 20px; }
+    .nav-tabs { display: none; }
+    section, .hero, .onboard-wrap, .dash-wrap, .products-wrap, .blog-wrap { padding-left: 20px; padding-right: 20px; }
+    .steps, .products-grid, .products-list, .blog-grid, .multi-upload { grid-template-columns: 1fr; }
+    .onboard-card { padding: 28px; }
+    .form-row, .choice-grid { grid-template-columns: 1fr; }
+    .chat-panel { width: calc(100vw - 24px); right: 12px; bottom: 12px; }
+    .float-stack { bottom: 16px; right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== TOP NAV ====== -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="logo" onclick="showPage('landing')">
+      <span class="logo-mark">CP</span>
+      Capital<span>Pyme</span>
+    </a>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-page="landing" onclick="showPage('landing')">Inicio</button>
+      <button class="nav-tab" data-page="onboarding" onclick="showPage('onboarding')">Postular</button>
+      <button class="nav-tab" data-page="dashboard" onclick="showPage('dashboard')">Mi Reporte</button>
+      <button class="nav-tab" data-page="products" onclick="showPage('products')">Productos</button>
+      <button class="nav-tab" data-page="blog" onclick="showPage('blog')">Aprende</button>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost">Iniciar sesión</a>
+      <a class="btn btn-primary" onclick="showPage('onboarding')">Postular</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================== -->
+<!-- LANDING -->
+<!-- ============================================== -->
+<div class="page active" id="page-landing">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Versión 2.0 · Reporte financiero en minutos</div>
+        <h1>Tu próximo financiamiento, <em>centralizado en Capital Pyme.</em></h1>
+        <p class="hero-sub">Sube tu Carpeta Tributaria y tus últimos balances. Te entregamos un reporte financiero completo y te conectamos con el producto correcto: crédito, factoring, leasing, seguros y más.</p>
+        <div class="hero-actions">
+          <a class="btn btn-cyan btn-lg" onclick="showPage('onboarding')">Empezar postulación →</a>
+          <a class="btn btn-ghost btn-lg" onclick="showPage('dashboard')">Ver reporte de ejemplo</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-stat"><span class="num">$2.400M</span><span class="lbl">Gestionados en 2025</span></div>
+          <div class="trust-stat"><span class="num">48h</span><span class="lbl">Tiempo promedio de respuesta</span></div>
+          <div class="trust-stat"><span class="num">94%</span><span class="lbl">PyMEs aprobadas</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="stack-card stack-card-1">
+          <div class="sc-label">FINANCIAMIENTO SOLICITADO</div>
+          <div class="sc-big">$35.000.000</div>
+          <div class="sc-mini">Capital de trabajo · 36 meses</div>
+          <div class="sparkline">
+            <div style="height: 30%"></div><div style="height: 45%"></div><div style="height: 38%"></div>
+            <div style="height: 60%"></div><div style="height: 72%"></div><div style="height: 65%"></div>
+            <div style="height: 85%"></div><div style="height: 92%"></div>
+          </div>
+        </div>
+        <div class="stack-card stack-card-2">
+          <div class="sc-label">PANADERÍA DOÑA ELENA</div>
+          <div class="sc-big">182.450 <span style="font-size: 14px; color: var(--ink-60); font-weight: 400;">M$</span></div>
+          <div class="sc-mini">Ventas últimos 12 meses</div>
+          <div style="margin-top: 16px; display: flex; gap: 8px;">
+            <span class="badge-ok">+12.4% YoY</span>
+            <span class="badge-ok">F22 al día</span>
+          </div>
+        </div>
+        <div class="stack-card stack-card-3">
+          <div class="sc-label">RATIOS CLAVE</div>
+          <div class="ratio-row"><span>Cobertura cuota</span><b>2.10×</b></div>
+          <div class="ratio-row"><span>Endeudamiento</span><b>0.31×</b></div>
+          <div class="ratio-row"><span>Recomendación</span><span class="badge-ok">APTA</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">Cómo funciona</div>
+      <h2 class="section-title">Cinco pasos. <em>Cero papeleo presencial.</em></h2>
+      <p class="section-sub">Todo lo que pediría tu ejecutivo bancario, automatizado y en línea.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Carpeta Tributaria empresa</div>
+        <div class="step-desc">Descárgala del SII y súbela en PDF. Leemos F29, F22 e IVA postergado automáticamente.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Últimos 3 balances</div>
+        <div class="step-desc">Formato PDF o Excel. Extraemos activos, pasivos y resultados para construir tu reporte.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Carpetas tributarias socios</div>
+        <div class="step-desc">Para validar respaldo personal y construir el perfil de riesgo del controlador.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">¿Qué financiamiento necesitas?</div>
+        <div class="step-desc">Monto, plazo y destino. Te sugerimos el producto financiero correcto.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">05</div>
+        <div class="step-title">Reporte + contrato</div>
+        <div class="step-desc">Descargas tu Ficha Financiera y firmas el contrato de asesoría 100% en línea.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--white); margin: 0; max-width: 100%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div style="max-width: 1320px; margin: 0 auto;">
+      <div class="section-head">
+        <div class="section-kicker">Qué intermediamos</div>
+        <h2 class="section-title">Seis productos. <em>Un solo expediente.</em></h2>
+        <p class="section-sub">Una vez generado tu reporte, te conectamos con la red de bancos, factoring, leasing y aseguradoras que mejor se ajusten a tu perfil. Honorarios variables según producto, desde 3%.</p>
+      </div>
+      <div class="products-grid">
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">💼</div>
+          <h3>Crédito Capital de Trabajo</h3>
+          <p>Líneas de crédito y créditos rotativos para sostener tu operación. Con o sin garantías CORFO.</p>
+          <div class="product-tags"><span class="tag">FOGAPE</span><span class="tag">FOGAIN</span><span class="tag tag-fee">3% – 4%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">📄</div>
+          <h3>Factoring</h3>
+          <p>Liquidez inmediata anticipando tus facturas. Ideal si tu DSO supera los 60 días.</p>
+          <div class="product-tags"><span class="tag">Sin deuda</span><span class="tag">Anticipo 90%</span><span class="tag tag-fee">3%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">🚛</div>
+          <h3>Leasing</h3>
+          <p>Adquiere vehículos, maquinaria o equipos sin descapitalizar tu negocio.</p>
+          <div class="product-tags"><span class="tag">Mobiliario</span><span class="tag">Inmobiliario</span><span class="tag tag-fee">4% – 5%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">🛡️</div>
+          <h3>Seguros</h3>
+          <p>Protección patrimonial, responsabilidad civil, vehículos comerciales y seguros de crédito.</p>
+          <div class="product-tags"><span class="tag">Patrimonial</span><span class="tag">RC</span><span class="tag tag-fee">15% prima</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">📊</div>
+          <h3>Servicios tributarios</h3>
+          <p>Asesoría F22, IDPC, IVA postergado, planificación tributaria y régimen Pro PyME.</p>
+          <div class="product-tags"><span class="tag">F22 anual</span><span class="tag">Pro PyME</span><span class="tag tag-fee">Tarifa fija</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">✨</div>
+          <h3>Otros servicios</h3>
+          <p>Cuenta corriente, líneas de comercio exterior, boletas de garantía y productos a medida.</p>
+          <div class="product-tags"><span class="tag">Cta. cte.</span><span class="tag">COMEX</span><span class="tag tag-fee">A convenir</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div style="background: var(--navy-900); border-radius: 32px; padding: 80px; color: white; text-align: center; position: relative; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(20, 184, 196, 0.2), transparent 60%);"></div>
+      <div style="position: relative; max-width: 720px; margin: 0 auto;">
+        <h2 style="font-size: clamp(40px, 5vw, 60px); color: white; margin-bottom: 20px;">¿Listo para tu próximo <em style="font-style: italic; color: var(--cyan); font-weight: 400;">financiamiento?</em></h2>
+        <p style="font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 36px;">Toma 10 minutos. Recibe tu reporte en 48 horas. Sin compromiso hasta firmar.</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a class="btn btn-cyan btn-lg" onclick="showPage('onboarding')">Empezar ahora — gratis →</a>
+          <a class="btn btn-wzp btn-lg" onclick="openWhatsApp()">Hablar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================== -->
+<!-- ONBOARDING -->
+<!-- ============================================== -->
+<div class="page" id="page-onboarding">
+  <div class="onboard-wrap">
+    <div class="onboard-head">
+      <a class="onboard-back" onclick="showPage('landing')">← Volver al inicio</a>
+      <div class="save-pill">Borrador guardado automáticamente</div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-step active" onclick="goStep(0)"><span>0 · Cuenta</span></div>
+      <div class="progress-step" onclick="goStep(1)"><span>1 · Empresa</span></div>
+      <div class="progress-step" onclick="goStep(2)"><span>2 · Balances</span></div>
+      <div class="progress-step" onclick="goStep(3)"><span>3 · Socios</span></div>
+      <div class="progress-step" onclick="goStep(4)"><span>4 · Capital</span></div>
+      <div class="progress-step" onclick="goStep(5)"><span>5 · Negocio</span></div>
+    </div>
+
+    <!-- STEP 0 — Cuenta liviana -->
+    <div class="onboard-card ob-step" id="ob-0">
+      <div class="ob-step-num">PASO 00 / 05</div>
+      <h2 class="ob-title">Crea tu <em>cuenta express</em></h2>
+      <p class="ob-desc">Solo necesitamos tu RUT, email y una clave. Así guardamos tu avance y te enviamos el reporte cuando esté listo. Toma 30 segundos.</p>
+
+      <div class="account-grid">
+        <div class="form-field">
+          <label>RUT empresa</label>
+          <input type="text" placeholder="76.123.456-7" value="78.453.291-K">
+        </div>
+        <div class="form-field">
+          <label>RUT representante</label>
+          <input type="text" placeholder="12.345.678-9" value="14.872.563-2">
+        </div>
+        <div class="form-field">
+          <label>Email de contacto</label>
+          <input type="email" placeholder="tu@empresa.cl" value="elena.morales@panaderiadonaelena.cl">
+        </div>
+        <div class="form-field">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" placeholder="+56 9 1234 5678" value="+56 9 8745 2310">
+        </div>
+        <div class="form-field" style="grid-column: 1 / -1;">
+          <label>Crea una clave (mín. 8 caracteres)</label>
+          <input type="password" placeholder="••••••••" value="••••••••••">
+          <div class="form-field-hint">Te enviaremos un código de verificación al WhatsApp</div>
+        </div>
+      </div>
+
+      <div class="auth-divider">o regístrate con</div>
+
+      <div class="auth-options">
+        <button class="auth-btn"><span class="icon">🔑</span> Continuar con Clave Única <span style="margin-left: auto; font-size: 11px; color: var(--ink-40);">Recomendado</span></button>
+        <button class="auth-btn"><span class="icon">G</span> Continuar con Google</button>
+      </div>
+
+      <div style="margin-top: 24px; padding: 16px; background: var(--navy-50); border-radius: 12px; font-size: 12px; color: var(--ink-60); line-height: 1.5;">
+        Al crear tu cuenta aceptas nuestros <a style="color: var(--cyan-dim); text-decoration: underline;">Términos</a> y la <a style="color: var(--cyan-dim); text-decoration: underline;">Política de Privacidad</a>. No vendemos tus datos ni compartimos tu información financiera sin tu autorización expresa.
+      </div>
+
+      <div class="ob-foot">
+        <div class="ob-foot-info">Paso 0 de 5 · Próximo: Carpeta Tributaria</div>
+        <button class="btn btn-primary btn-lg" onclick="goStep(1)">Crear cuenta y continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="onboard-card ob-step" id="ob-1" style="display:none;">
+      <div class="ob-step-num">PASO 01 / 05</div>
+      <h2 class="ob-title">Carpeta Tributaria de la <em>empresa</em></h2>
+      <p class="ob-desc">Descárgala desde tu portal del SII (Servicios online → Situación tributaria → Carpeta tributaria). Aceptamos el PDF generado directamente por el SII.</p>
+
+      <div class="upload-zone uploaded" onclick="this.classList.toggle('uploaded')">
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">CarpetaTributariaSII_78453291-K.pdf</div>
+        <div class="upload-hint">2.1 MB · Subido hace 8 segundos · Detectada ventas 2023–2026</div>
+        <div class="upload-meta">SHA-256 · 7a2c...8e44 · validado</div>
+      </div>
+
+      <div style="margin-top: 32px; padding: 20px; background: var(--cyan-soft); border-radius: 14px; display: flex; gap: 14px; align-items: start;">
+        <div style="font-size: 20px;">💡</div>
+        <div style="font-size: 13px; color: var(--navy-800);"><b>¿No tienes la carpeta a mano?</b> Te enviamos un instructivo paso a paso al WhatsApp. También puedes autorizarnos lectura directa con tu Clave Tributaria.</div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(0)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(2)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="onboard-card ob-step" id="ob-2" style="display:none;">
+      <div class="ob-step-num">PASO 02 / 05</div>
+      <h2 class="ob-title">Últimos <em>3 balances</em> de la empresa</h2>
+      <p class="ob-desc">Sube los balances clasificados de los últimos tres ejercicios. Formato PDF firmado o Excel funciona perfecto.</p>
+
+      <div class="multi-upload">
+        <div class="upload-zone uploaded">
+          <div class="upload-icon">📊</div>
+          <div class="upload-title">Balance 2023</div>
+          <div class="upload-hint">Balance2023_DonaElena.pdf · 0.9 MB</div>
+        </div>
+        <div class="upload-zone uploaded">
+          <div class="upload-icon">📊</div>
+          <div class="upload-title">Balance 2024</div>
+          <div class="upload-hint">Balance2024_DonaElena.pdf · 1.1 MB</div>
+        </div>
+        <div class="upload-zone">
+          <div class="upload-icon">+</div>
+          <div class="upload-title">Balance 2025</div>
+          <div class="upload-hint">Arrastra o haz clic para subir</div>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(1)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(3)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="onboard-card ob-step" id="ob-3" style="display:none;">
+      <div class="ob-step-num">PASO 03 / 05</div>
+      <h2 class="ob-title">Carpeta Tributaria <em>de los socios</em></h2>
+      <p class="ob-desc">Necesitamos la carpeta tributaria personal de cada socio con participación mayor al 10%. Esto valida el respaldo patrimonial y construye el perfil del controlador.</p>
+
+      <div style="background: var(--navy-50); border-radius: 14px; padding: 20px; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900);">Elena Morales Pinto</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-60);">RUT 14.872.563-2 · 60% participación</div>
+          </div>
+          <span class="badge-ok">Carpeta cargada</span>
+        </div>
+        <div class="upload-meta">CarpetaTribSocio_14872563-2.pdf · 1.4 MB</div>
+      </div>
+
+      <div style="background: var(--navy-50); border-radius: 14px; padding: 20px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900);">Roberto Morales Pinto</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-60);">RUT 13.456.789-1 · 40% participación</div>
+          </div>
+          <span class="badge-ok">Carpeta cargada</span>
+        </div>
+        <div class="upload-meta">CarpetaTribSocio_13456789-1.pdf · 1.2 MB</div>
+      </div>
+
+      <button class="btn btn-ghost" style="width: 100%; justify-content: center; padding: 16px; border-style: dashed;">+ Agregar otro socio</button>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(2)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(4)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="onboard-card ob-step" id="ob-4" style="display:none;">
+      <div class="ob-step-num">PASO 04 / 05</div>
+      <h2 class="ob-title">¿Qué <em>financiamiento</em> necesitas?</h2>
+      <p class="ob-desc">Cuéntanos cuánto, para qué y en qué plazo. Te recomendaremos el producto financiero adecuado.</p>
+
+      <div class="form-field">
+        <label>Monto solicitado (CLP)</label>
+        <div class="amount-input">
+          <span class="currency">$</span>
+          <input type="text" value="35.000.000">
+        </div>
+        <div class="form-field-hint">Puedes ajustarlo después según el análisis</div>
+      </div>
+
+      <div class="form-field">
+        <label>Tipo de financiamiento</label>
+        <div class="choice-grid">
+          <div class="choice-card selected">
+            <div class="choice-icon">💼</div>
+            <div class="choice-title">Capital de Trabajo</div>
+            <div class="choice-desc">Para sostener operación, compras de inventario o nómina</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">📄</div>
+            <div class="choice-title">Factoring</div>
+            <div class="choice-desc">Anticipar facturas y mejorar caja inmediata</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">🚛</div>
+            <div class="choice-title">Leasing</div>
+            <div class="choice-desc">Adquirir activos productivos: vehículos, equipos, máquinas</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">📊</div>
+            <div class="choice-title">Aún no lo sé</div>
+            <div class="choice-desc">Recomiéndame según mi situación financiera</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Plazo deseado</label>
+          <select>
+            <option>12 meses</option>
+            <option>24 meses</option>
+            <option selected>36 meses</option>
+            <option>48 meses</option>
+            <option>60 meses</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Urgencia</label>
+          <select>
+            <option>Necesito en menos de 7 días</option>
+            <option selected>15 a 30 días</option>
+            <option>1 a 3 meses</option>
+            <option>Sin urgencia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(3)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(5)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="onboard-card ob-step" id="ob-5" style="display:none;">
+      <div class="ob-step-num">PASO 05 / 05</div>
+      <h2 class="ob-title">Cuéntanos de tu <em>negocio</em></h2>
+      <p class="ob-desc">Una breve descripción nos ayuda a contextualizar tu reporte y matchearte con el ejecutivo correcto.</p>
+
+      <div class="form-field">
+        <label>Descripción del negocio</label>
+        <textarea>Somos una panadería artesanal en Ñuñoa con 8 años de operación. Atendemos público directo en local y abastecemos a 12 cafeterías y restaurantes del sector oriente con productos frescos diarios. Buscamos capital para ampliar la sala de producción e incorporar un nuevo horno rotatorio que permita aumentar volumen un 40%.</textarea>
+        <div class="form-field-hint">2 a 4 párrafos · Lo que cuentas aquí nutre el análisis cualitativo del reporte</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Clientes principales (opcional)</label>
+          <input type="text" value="Cafés del barrio italia, hoteles boutique, retail local">
+        </div>
+        <div class="form-field">
+          <label>N° de empleados</label>
+          <select>
+            <option>1 a 5</option>
+            <option selected>6 a 25</option>
+            <option>26 a 100</option>
+            <option>+100</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, var(--cyan-soft), white); border: 1px solid var(--cyan); border-radius: 16px; padding: 24px; margin-top: 16px;">
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="font-size: 36px;">✨</div>
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900); margin-bottom: 4px;">Ya tenemos todo lo necesario</div>
+            <div style="font-size: 13px; color: var(--ink-60);">Al continuar generaremos tu Ficha Financiera y el contrato de asesoría. Recibirás el reporte por correo y WhatsApp en menos de 48 horas hábiles.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(4)">← Atrás</button>
+        <button class="btn btn-cyan btn-lg" onclick="showPage('dashboard')">Generar reporte →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- DASHBOARD -->
+<!-- ============================================== -->
+<div class="page" id="page-dashboard">
+  <div class="dash-wrap">
+    <aside class="dash-side">
+      <div class="side-section">
+        <div class="side-label">Reporte</div>
+        <a class="side-item active"><span class="dot"></span> Resumen ejecutivo</a>
+        <a class="side-item"><span class="dot"></span> Ventas (F29)</a>
+        <a class="side-item"><span class="dot"></span> Balance y resultados</a>
+        <a class="side-item"><span class="dot"></span> Análisis tributario</a>
+        <a class="side-item"><span class="dot"></span> Ratios financieros</a>
+        <a class="side-item"><span class="dot"></span> Capacidad de pago</a>
+      </div>
+      <div class="side-section">
+        <div class="side-label">Acciones</div>
+        <a class="side-item"><span class="dot"></span> Descargar PDF</a>
+        <a class="side-item"><span class="dot"></span> Firmar contrato</a>
+        <a class="side-item" onclick="showPage('products')"><span class="dot"></span> Ver productos</a>
+        <a class="side-item" onclick="openChat()"><span class="dot"></span> Hablar con ejecutivo</a>
+      </div>
+    </aside>
+
+    <div class="dash-main">
+      <div class="dash-hero">
+        <div class="dash-hero-content">
+          <div class="dh-row">
+            <div>
+              <div class="dh-company">Ficha Financiera · Generada 15/05/2026</div>
+              <div class="dh-name">Panadería Doña Elena SpA</div>
+              <div class="dh-rut">RUT 78.453.291-K · Pro PyME General (14D N°3)</div>
+            </div>
+            <div class="dh-score">
+              <div class="score-circle">A−</div>
+              <div class="dh-score-lbl">Score Capital Pyme</div>
+            </div>
+          </div>
+          <div class="dh-stats">
+            <div class="dh-stat">
+              <div class="lbl">Ventas Últimos 12m</div>
+              <div class="val">$182M</div>
+              <div class="delta">+12.4% YoY</div>
+            </div>
+            <div class="dh-stat">
+              <div class="lbl">Patrimonio Financiero</div>
+              <div class="val">$94.2M</div>
+              <div class="delta">al cierre 2025</div>
+            </div>
+            <div class="dh-stat">
+              <div class="lbl">Cobertura de cuota</div>
+              <div class="val">2.10×</div>
+              <div class="delta">Sobre 1.5× sugerido</div>
+            </div>
+            <div class="dh-stat">
+              <div class="lbl">Endeudamiento</div>
+              <div class="val">0.31×</div>
+              <div class="delta">Pasivo / Patrimonio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recommend">
+        <div class="rec-content">
+          <div class="rec-eyebrow">Recomendación</div>
+          <div class="rec-title">Operación apta para curse, con resguardos.</div>
+          <div class="rec-desc">El financiamiento por $35.000.000 representa el 19% de las ventas anuales y el 37% del patrimonio. La generación de caja operacional (≈$22.8M anuales) cubre con holgura la cuota estimada de $1.08M/mes.</div>
+          <a class="btn btn-cyan" onclick="showPage('products')">Ver productos recomendados →</a>
+        </div>
+        <div class="rec-conds">
+          <div class="rec-conds-title">Condicionada a:</div>
+          <ol>
+            <li>Verificación de antigüedad de la cartera de clientes B2B</li>
+            <li>Aval personal de la socia controladora (Elena Morales, 60%)</li>
+            <li>Idealmente respaldo CORFO (FOGAPE) como garantía complementaria</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dc-head">
+            <div>
+              <div class="dc-title">Evolución de ventas mensuales</div>
+              <div class="dc-mini">Según F29 — base devengada · M$</div>
+            </div>
+            <select style="border: 1px solid var(--line); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-family: inherit;">
+              <option>Últimos 18 meses</option>
+            </select>
+          </div>
+          <div class="chart-wrap">
+            <div class="chart-bars">
+              <div class="chart-bar" style="height: 48%"><span class="lbl">dic'24</span></div>
+              <div class="chart-bar" style="height: 42%"><span class="lbl">ene'25</span></div>
+              <div class="chart-bar" style="height: 45%"><span class="lbl">feb</span></div>
+              <div class="chart-bar" style="height: 52%"><span class="lbl">mar</span></div>
+              <div class="chart-bar" style="height: 56%"><span class="lbl">abr</span></div>
+              <div class="chart-bar" style="height: 58%"><span class="lbl">may</span></div>
+              <div class="chart-bar" style="height: 62%"><span class="lbl">jun</span></div>
+              <div class="chart-bar" style="height: 64%"><span class="lbl">jul</span></div>
+              <div class="chart-bar" style="height: 70%"><span class="lbl">ago</span></div>
+              <div class="chart-bar" style="height: 67%"><span class="lbl">sep</span></div>
+              <div class="chart-bar" style="height: 75%"><span class="lbl">oct</span></div>
+              <div class="chart-bar" style="height: 82%"><span class="lbl">nov</span></div>
+              <div class="chart-bar" style="height: 92%"><span class="lbl">dic'25</span></div>
+              <div class="chart-bar" style="height: 78%"><span class="lbl">ene'26</span></div>
+              <div class="chart-bar" style="height: 80%"><span class="lbl">feb</span></div>
+              <div class="chart-bar" style="height: 85%"><span class="lbl">mar</span></div>
+              <div class="chart-bar" style="height: 88%"><span class="lbl">abr</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dc-head">
+            <div class="dc-title">Ratios clave</div>
+          </div>
+          <div class="ratios-list">
+            <div class="ratio-item">
+              <div class="ratio-name">ROE 2025</div>
+              <div class="ratio-val"><span class="ratio-num">28.4%</span><span class="badge-ok">Bueno</span></div>
+            </div>
+            <div class="ratio-item">
+              <div class="ratio-name">Margen neto</div>
+              <div class="ratio-val"><span class="ratio-num">14.7%</span><span class="badge-ok">Saludable</span></div>
+            </div>
+            <div class="ratio-item">
+              <div class="ratio-name">Razón corriente</div>
+              <div class="ratio-val"><span class="ratio-num">2.34×</span><span class="badge-ok">Holgada</span></div>
+            </div>
+            <div class="ratio-item">
+              <div class="ratio-name">DSO (días cobro)</div>
+              <div class="ratio-val"><span class="ratio-num">42</span><span class="badge-ok">Sano</span></div>
+            </div>
+            <div class="ratio-item">
+              <div class="ratio-name">Rotación inventario</div>
+              <div class="ratio-val"><span class="ratio-num">14×</span><span class="badge-ok">Alto</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card strengths-card">
+          <div class="dc-head">
+            <div class="dc-title">Fortalezas</div>
+          </div>
+          <ul class="insight-list">
+            <li>Trayectoria operativa sólida: 8 años de operación continua en Ñuñoa con cartera estable</li>
+            <li>Cumplimiento tributario al día: F29 mensuales y F22 AT2026 sin observaciones SII</li>
+            <li>Régimen Pro PyME General con tasa preferencial de IDPC de 12.5%</li>
+            <li>Crecimiento sostenido del 12.4% YoY con estacionalidad predecible (peak diciembre)</li>
+            <li>Bajo endeudamiento (0.31×) y razón corriente holgada (2.34×)</li>
+            <li>Mezcla equilibrada B2C / B2B reduce concentración de clientes</li>
+          </ul>
+        </div>
+
+        <div class="dash-card considerations-card">
+          <div class="dc-head">
+            <div class="dc-title">Aspectos a considerar</div>
+          </div>
+          <ul class="insight-list">
+            <li>Capital social inicial bajo ($3M) respecto al patrimonio actual reflejado</li>
+            <li>Estacionalidad marcada: meses bajos (feb–mar) muestran caída del 20% vs peak</li>
+            <li>Aval personal de socia controladora será requerido por la mayoría de bancos</li>
+            <li>Activo fijo nuevo (horno rotatorio) deberá quedar prendado en garantía CORFO</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ====== CONTRATO con FEE VARIABLE ====== -->
+      <div class="contract-panel">
+        <div class="cp-head">
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan-dim); font-weight: 600; margin-bottom: 12px;">Contrato de asesoría</div>
+            <h2>Honorarios variables, <em style="font-style: italic; color: var(--cyan-dim); font-weight: 400;">según producto.</em></h2>
+            <p>Solo cobramos si la operación se cursa. El porcentaje varía según producto, monto y complejidad — siempre <b>desde 3%</b>.</p>
+          </div>
+        </div>
+
+        <div class="cp-body">
+          <div>
+            <table class="fee-table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Honorarios</th>
+                  <th>Fijo apertura</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">💼</div> Crédito Capital de Trabajo</div></td>
+                  <td><b>3% – 4%</b> sobre cursado</td>
+                  <td>$250.000</td>
+                </tr>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">📄</div> Factoring</div></td>
+                  <td><b>3%</b> sobre línea aprobada</td>
+                  <td>$150.000</td>
+                </tr>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">🚛</div> Leasing</div></td>
+                  <td><b>4% – 5%</b> sobre valor activo</td>
+                  <td>$300.000</td>
+                </tr>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">🛡️</div> Seguros</div></td>
+                  <td><b>15%</b> de la prima anual</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">📊</div> Servicios tributarios</div></td>
+                  <td>Tarifa fija mensual</td>
+                  <td>Desde UF 8</td>
+                </tr>
+                <tr>
+                  <td><div class="product-cell"><div class="ico">✨</div> Otros / a medida</div></td>
+                  <td>A convenir</td>
+                  <td>A convenir</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="fee-note">
+              <b>Modelo "Success Fee":</b> sin éxito, sin cobro. Solo facturamos cuando el banco / aseguradora aprueba y se firma el desembolso o póliza.
+            </div>
+          </div>
+
+          <div>
+            <div class="fee-summary">
+              <div class="fee-summary-inner">
+                <div class="lbl">Tu operación · Estimado</div>
+                <div class="big">$1.450.000</div>
+                <div class="mini">Crédito Capital de Trabajo · $35M aprobados</div>
+                <div class="fee-breakdown">
+                  <div class="fee-row">
+                    <span>Honorarios (3.5%)</span>
+                    <span>$1.225.000</span>
+                  </div>
+                  <div class="fee-row">
+                    <span>Apertura productos bancarios</span>
+                    <span>$250.000</span>
+                  </div>
+                  <div class="fee-row">
+                    <span>IVA (no aplica)</span>
+                    <span>—</span>
+                  </div>
+                  <div class="fee-row total">
+                    <span>Total al curse</span>
+                    <span>$1.475.000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sign-actions">
+              <a class="btn btn-cyan btn-lg" style="flex: 1; justify-content: center;">Firmar con Clave Única →</a>
+              <a class="btn btn-ghost btn-lg" style="flex: 1; justify-content: center;">Revisar contrato</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- PRODUCTS -->
+<!-- ============================================== -->
+<div class="page" id="page-products">
+  <div class="products-wrap">
+    <div class="products-hero">
+      <div>
+        <div class="section-kicker">Marketplace</div>
+        <h1 style="font-size: clamp(40px, 5vw, 64px); color: var(--navy-900); margin-bottom: 16px;">Tu match financiero, <em style="font-style: italic; color: var(--cyan-dim); font-weight: 400;">curado</em>.</h1>
+        <p style="font-size: 17px; color: var(--ink-60); max-width: 560px;">Productos pre-seleccionados según tu Ficha Financiera. Compara, simula y solicita en un clic.</p>
+      </div>
+      <div style="background: white; border: 1px solid var(--line); border-radius: 18px; padding: 24px;">
+        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-60); margin-bottom: 8px;">Para tu perfil</div>
+        <div style="font-family: 'Fraunces'; font-size: 24px; color: var(--navy-900); margin-bottom: 6px;">$35.000.000 · 36m</div>
+        <div style="font-size: 13px; color: var(--ink-60);">Capital de trabajo · Panadería Doña Elena</div>
+      </div>
+    </div>
+
+    <div class="filters-bar">
+      <span class="filter-label">Filtrar:</span>
+      <button class="filter-chip active">Todos</button>
+      <button class="filter-chip">Crédito</button>
+      <button class="filter-chip">Factoring</button>
+      <button class="filter-chip">Leasing</button>
+      <button class="filter-chip">Seguros</button>
+      <button class="filter-chip">Tributarios</button>
+      <div style="margin-left: auto; font-size: 12px; color: var(--ink-60);">12 productos · Ordenados por afinidad</div>
+    </div>
+
+    <div class="products-list">
+      <div class="prod-detail-card prod-featured">
+        <div class="pd-icon-row">
+          <div class="pd-icon">💼</div>
+          <div class="pd-rate"><b>1.4%</b>mensual</div>
+        </div>
+        <h3 class="pd-title">Crédito CORFO FOGAPE</h3>
+        <div class="pd-issuer">Banco Estado · vía Capital Pyme</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Monto máximo</span><span>$50M</span></div>
+          <div class="pd-feature"><span>Plazo</span><span>12–36 meses</span></div>
+          <div class="pd-feature"><span>Garantía</span><span>FOGAPE 80%</span></div>
+          <div class="pd-feature"><span>Tiempo respuesta</span><span>5–7 días</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">3.5% + $250K</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-cyan">Solicitar →</a>
+          <a class="btn btn-ghost">Simular</a>
+        </div>
+      </div>
+
+      <div class="prod-detail-card">
+        <div class="pd-icon-row">
+          <div class="pd-icon">💼</div>
+          <div class="pd-rate"><b>1.6%</b>mensual</div>
+        </div>
+        <h3 class="pd-title">Crédito PyME directo</h3>
+        <div class="pd-issuer">Banco BCI · sin garantía estatal</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Monto máximo</span><span>$60M</span></div>
+          <div class="pd-feature"><span>Plazo</span><span>24–60 meses</span></div>
+          <div class="pd-feature"><span>Garantía</span><span>Aval socio</span></div>
+          <div class="pd-feature"><span>Tiempo respuesta</span><span>10 días</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">4% + $250K</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-primary">Solicitar →</a>
+          <a class="btn btn-ghost">Simular</a>
+        </div>
+      </div>
+
+      <div class="prod-detail-card">
+        <div class="pd-icon-row">
+          <div class="pd-icon">📄</div>
+          <div class="pd-rate"><b>1.1%</b>mensual</div>
+        </div>
+        <h3 class="pd-title">Factoring electrónico</h3>
+        <div class="pd-issuer">Factotal · facturas SII</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Anticipo</span><span>Hasta 90%</span></div>
+          <div class="pd-feature"><span>Plazo factura</span><span>30–120 días</span></div>
+          <div class="pd-feature"><span>Comisión</span><span>0.5% + IVA</span></div>
+          <div class="pd-feature"><span>Tiempo respuesta</span><span>24 horas</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">3% + $150K</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-primary">Solicitar →</a>
+          <a class="btn btn-ghost">Simular</a>
+        </div>
+      </div>
+
+      <div class="prod-detail-card">
+        <div class="pd-icon-row">
+          <div class="pd-icon">🚛</div>
+          <div class="pd-rate"><b>1.3%</b>mensual</div>
+        </div>
+        <h3 class="pd-title">Leasing maquinaria</h3>
+        <div class="pd-issuer">Tanner Leasing</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Pie</span><span>Desde 10%</span></div>
+          <div class="pd-feature"><span>Plazo</span><span>24–60 meses</span></div>
+          <div class="pd-feature"><span>Beneficio</span><span>Crédito IVA</span></div>
+          <div class="pd-feature"><span>Tiempo respuesta</span><span>7 días</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">4.5% + $300K</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-primary">Solicitar →</a>
+          <a class="btn btn-ghost">Simular</a>
+        </div>
+      </div>
+
+      <div class="prod-detail-card">
+        <div class="pd-icon-row">
+          <div class="pd-icon">🛡️</div>
+          <div class="pd-rate"><b>UF 18</b>anual</div>
+        </div>
+        <h3 class="pd-title">Seguro patrimonial PyME</h3>
+        <div class="pd-issuer">HDI Seguros</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Cobertura</span><span>Hasta $200M</span></div>
+          <div class="pd-feature"><span>Incluye</span><span>Incendio, robo, RC</span></div>
+          <div class="pd-feature"><span>Deducible</span><span>UF 5</span></div>
+          <div class="pd-feature"><span>Vigencia</span><span>12 meses</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">15% prima anual</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-primary">Cotizar →</a>
+          <a class="btn btn-ghost">Detalle</a>
+        </div>
+      </div>
+
+      <div class="prod-detail-card">
+        <div class="pd-icon-row">
+          <div class="pd-icon">📊</div>
+          <div class="pd-rate"><b>UF 12</b>mensual</div>
+        </div>
+        <h3 class="pd-title">Asesoría tributaria PyME</h3>
+        <div class="pd-issuer">Capital Pyme · in-house</div>
+        <div class="pd-features">
+          <div class="pd-feature"><span>Incluye</span><span>F22, F29, IVA</span></div>
+          <div class="pd-feature"><span>Régimen</span><span>Pro PyME / 14D</span></div>
+          <div class="pd-feature"><span>Soporte</span><span>Mensual</span></div>
+          <div class="pd-feature"><span>Modalidad</span><span>Remoto</span></div>
+        </div>
+        <div class="pd-fee-bar">
+          <span class="fl">Honorarios Capital Pyme</span>
+          <span class="fv">Tarifa fija UF 12/mes</span>
+        </div>
+        <div class="pd-actions">
+          <a class="btn btn-primary">Contratar →</a>
+          <a class="btn btn-ghost">Conversar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- BLOG -->
+<!-- ============================================== -->
+<div class="page" id="page-blog">
+  <div class="blog-wrap">
+    <div class="blog-hero">
+      <h1>Aprende a leer <em>los números</em> de tu PyME.</h1>
+      <p>Educación financiera práctica, guías tributarias y casos reales de PyMEs chilenas.</p>
+    </div>
+
+    <article class="blog-feat">
+      <div class="blog-feat-img"></div>
+      <div>
+        <span class="blog-cat">Caso destacado</span>
+        <h2>De pyme familiar a $35M de capital: cómo Panadería Doña Elena financió su nuevo horno</h2>
+        <p>Una panadería con 8 años de operación, fuerte estacionalidad y aval familiar. ¿Cómo conseguir $35M para crecer 40% en producción? Revisamos paso a paso el expediente y el match con FOGAPE.</p>
+        <div class="blog-meta">
+          <span>15 mayo, 2026</span>
+          <span>9 min lectura</span>
+          <span>Por equipo Capital Pyme</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="blog-grid">
+      <article class="blog-card">
+        <div class="blog-thumb" data-letter="F"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Tributario</span>
+          <h3>F29 y F22: la diferencia que tu banco está mirando</h3>
+          <p>Por qué la base devengada y la base percibida cuentan historias distintas — y cuál importa para tu capacidad de pago.</p>
+          <div class="blog-meta"><span>7 min</span><span>Tributario</span></div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-thumb blog-thumb-2" data-letter="K"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Capital</span>
+          <h3>FOGAPE vs FOGAIN: qué garantía CORFO elegir</h3>
+          <p>Las dos garantías estatales más usadas comparadas: requisitos, montos, plazos y cuándo conviene cada una.</p>
+          <div class="blog-meta"><span>5 min</span><span>Capital</span></div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-thumb blog-thumb-3" data-letter="L"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Liquidez</span>
+          <h3>Tu DSO está matando tu caja (y no lo sabes)</h3>
+          <p>Cómo calcular tus días de cobro, qué significan más de 90 días y tres palancas concretas para reducirlos.</p>
+          <div class="blog-meta"><span>6 min</span><span>Liquidez</span></div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-thumb blog-thumb-4" data-letter="P"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Régimen</span>
+          <h3>Pro PyME General vs Transparente: cuál elegir</h3>
+          <p>El régimen 14D ofrece tasa preferencial de 12.5%. Cuándo conviene transparente y cuándo general.</p>
+          <div class="blog-meta"><span>8 min</span><span>Régimen</span></div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-thumb blog-thumb-5" data-letter="R"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Riesgo</span>
+          <h3>IVA postergado: el pasivo oculto en tu balance</h3>
+          <p>El beneficio del Art. 64 LIR es útil pero peligroso. Cómo gestionarlo sin romper tu liquidez.</p>
+          <div class="blog-meta"><span>5 min</span><span>Riesgo</span></div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-thumb blog-thumb-6" data-letter="C"></div>
+        <div class="blog-body">
+          <span class="blog-cat">Cobertura</span>
+          <h3>Seguros que tu PyME debería tener (y por qué)</h3>
+          <p>Patrimonial, RC, seguro de crédito, vehicular comercial. Las coberturas mínimas según rubro.</p>
+          <div class="blog-meta"><span>7 min</span><span>Cobertura</span></div>
+        </div>
+      </article>
+    </div>
+
+    <section class="academy">
+      <div class="academy-content">
+        <div>
+          <span style="color: var(--cyan); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Academia Capital Pyme</span>
+          <h2 style="margin-top: 14px;">Curso gratuito: <em>Finanzas para no financieros.</em></h2>
+          <p>Seis módulos cortos para entender tu balance, tu F22, tus ratios y tu capacidad de endeudamiento. Sin jerga. Con casos reales de PyMEs chilenas.</p>
+          <a class="btn btn-cyan btn-lg">Empezar curso gratis →</a>
+        </div>
+        <div class="academy-modules">
+          <div class="academy-mod">
+            <div class="academy-mod-num">01</div>
+            <div class="academy-mod-text">
+              <div class="academy-mod-title">Anatomía de un balance</div>
+              <div class="academy-mod-meta">14 min · Video + guía descargable</div>
+            </div>
+            <div class="academy-mod-arrow">→</div>
+          </div>
+          <div class="academy-mod">
+            <div class="academy-mod-num">02</div>
+            <div class="academy-mod-text">
+              <div class="academy-mod-title">Leyendo tu F22 sin morir</div>
+              <div class="academy-mod-meta">18 min · Caso práctico real</div>
+            </div>
+            <div class="academy-mod-arrow">→</div>
+          </div>
+          <div class="academy-mod">
+            <div class="academy-mod-num">03</div>
+            <div class="academy-mod-text">
+              <div class="academy-mod-title">Los 7 ratios que sí importan</div>
+              <div class="academy-mod-meta">22 min · Plantilla Excel</div>
+            </div>
+            <div class="academy-mod-arrow">→</div>
+          </div>
+          <div class="academy-mod">
+            <div class="academy-mod-num">04</div>
+            <div class="academy-mod-text">
+              <div class="academy-mod-title">Capacidad de pago: el cálculo</div>
+              <div class="academy-mod-meta">16 min · Calculadora interactiva</div>
+            </div>
+            <div class="academy-mod-arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- FOOTER -->
+<!-- ============================================== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo" style="color: white; margin-bottom: 16px;">
+        <span class="logo-mark">CP</span>
+        Capital<span style="color: var(--cyan);">Pyme</span>
+      </div>
+      <div class="footer-tag">Tu próximo financiamiento, <em>centralizado.</em></div>
+      <p style="font-size: 13px;">Gestión integral de productos financieros para PyMEs en Chile. Regulado y registrado en CMF.</p>
+    </div>
+    <div>
+      <h4>Producto</h4>
+      <a>Cómo funciona</a>
+      <a>Productos</a>
+      <a>Honorarios</a>
+      <a>Casos de éxito</a>
+    </div>
+    <div>
+      <h4>Aprende</h4>
+      <a>Blog</a>
+      <a>Academia</a>
+      <a>Guías PyME</a>
+      <a>Calculadoras</a>
+    </div>
+    <div>
+      <h4>Empresa</h4>
+      <a>Sobre nosotros</a>
+      <a>Contacto</a>
+      <a>Términos</a>
+      <a>Privacidad</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Capital Pyme SpA · Todos los derechos reservados</div>
+    <div>Hecho en Santiago, Chile 🇨🇱</div>
+  </div>
+</footer>
+
+<!-- ============================================== -->
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<!-- ============================================== -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">✦</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma · Asistente Capital Pyme</div>
+      <div class="status">En línea · Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">×</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      ¡Hola! 👋 Soy Pyma, la asistente virtual de Capital Pyme. Estoy acá para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      ¿En qué te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('¿Cómo funciona Capital Pyme?')">¿Cómo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('¿Qué documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('¿Cuánto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un crédito')">Quiero un crédito</button>
+    <button class="quick-btn" onclick="sendQuick('¿En qué consiste FOGAPE?')">¿Qué es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">→</button>
+    </div>
+    <div class="chat-handoff">
+      <span>💬</span>
+      <span>¿Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp →</a></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    const tab = document.querySelector('.nav-tab[data-page="' + pageId + '"]');
+    if (tab) tab.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goStep(n) {
+    document.querySelectorAll('.ob-step').forEach(s => s.style.display = 'none');
+    document.getElementById('ob-' + n).style.display = 'block';
+    const steps = document.querySelectorAll('.progress-step');
+    steps.forEach((s, i) => {
+      s.classList.remove('active', 'done');
+      if (i < n) s.classList.add('done');
+      if (i === n) s.classList.add('active');
+    });
+  }
+
+  document.querySelectorAll('.choice-card').forEach(c => {
+    c.addEventListener('click', function() {
+      this.parentElement.querySelectorAll('.choice-card').forEach(x => x.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.addEventListener('click', function() {
+      this.parentElement.querySelectorAll('.filter-chip').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // ====== CHAT BOT LOGIC ======
+  function openChat() {
+    document.getElementById('chatPanel').classList.add('open');
+    document.getElementById('floatStack').style.display = 'none';
+    document.querySelector('.float-badge').style.display = 'none';
+  }
+  function closeChat() {
+    document.getElementById('chatPanel').classList.remove('open');
+    document.getElementById('floatStack').style.display = 'flex';
+  }
+  function openWhatsApp() {
+    // Demo: simula apertura WhatsApp Business
+    const msg = encodeURIComponent("Hola Capital Pyme, vengo desde el sitio web y me gustaría conversar sobre financiamiento.");
+    window.open('https://wa.me/56912345678?text=' + msg, '_blank');
+  }
+
+  function getTime() {
+    const d = new Date();
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  function addMsg(text, who) {
+    const body = document.getElementById('chatBody');
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + who;
+    div.innerHTML = text + '<span class="ts">' + getTime() + '</span>';
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function botReply(userText) {
+    const t = userText.toLowerCase();
+    let reply;
+    if (t.includes('cómo funciona') || t.includes('como funciona')) {
+      reply = 'Capital Pyme funciona en 5 pasos:<br><br>1️⃣ Subes tu carpeta tributaria SII<br>2️⃣ Tus últimos 3 balances<br>3️⃣ Carpetas de socios<br>4️⃣ Tipo de financiamiento que necesitas<br>5️⃣ Una breve descripción de tu negocio<br><br>En 48 horas recibes tu Ficha Financiera y te conectamos con el producto correcto. ¿Quieres empezar tu postulación?';
+    } else if (t.includes('documento') || t.includes('necesito') || t.includes('papeles')) {
+      reply = 'Solo necesitas 3 cosas:<br><br>📄 <b>Carpeta tributaria de la empresa</b> (descargable desde el SII)<br>📊 <b>Últimos 3 balances</b> (PDF o Excel)<br>👤 <b>Carpetas tributarias de los socios</b> con +10% de participación<br><br>El resto lo extraemos automáticamente. ¿Tienes todo a mano?';
+    } else if (t.includes('honorario') || t.includes('cuesta') || t.includes('cobran') || t.includes('precio') || t.includes('comisión') || t.includes('comision')) {
+      reply = 'Nuestros honorarios son variables según producto y se cobran <b>solo si la operación se cursa</b> (success fee):<br><br>💼 Crédito: <b>3% – 4%</b> + $250K apertura<br>📄 Factoring: <b>3%</b> + $150K<br>🚛 Leasing: <b>4% – 5%</b> + $300K<br>🛡️ Seguros: <b>15%</b> de la prima anual<br>📊 Tributarios: tarifa fija desde UF 8/mes<br><br>Sin éxito, sin cobro.';
+    } else if (t.includes('crédito') || t.includes('credito') || t.includes('préstamo') || t.includes('prestamo')) {
+      reply = '¡Genial! Para un crédito de capital de trabajo trabajamos con BancoEstado, BCI, Santander, Itaú y más. Tasas referenciales desde 1.3% mensual, con o sin garantía FOGAPE/FOGAIN.<br><br>Para darte una recomendación precisa necesito ver tu Ficha Financiera. ¿Te gustaría empezar tu postulación ahora?';
+    } else if (t.includes('fogape') || t.includes('corfo') || t.includes('garantía') || t.includes('garantia')) {
+      reply = 'FOGAPE es un fondo de garantía estatal que cubre hasta el <b>80% del crédito</b>. Sirve para que el banco te apruebe operaciones que sin garantía no aprobaría, especialmente si tienes poca trayectoria o sin avales potentes.<br><br>FOGAIN es similar pero para inversión productiva (no capital de trabajo). ¿Quieres que veamos cuál te conviene?';
+    } else if (t.includes('factoring')) {
+      reply = '📄 Factoring es ideal si tus clientes te pagan a 60-120 días. Te anticipamos hasta el 90% de tu factura en 24 horas.<br><br>Trabajamos con Factotal, BancoEstado Factoring, Tanner y otros. Comisiones desde 0.5% + IVA mensual.<br><br>¿Cuánto tienes hoy en facturas pendientes de cobro?';
+    } else if (t.includes('hola') || t.includes('buenos') || t.includes('buenas')) {
+      reply = '¡Hola de nuevo! 😊 ¿Cómo te puedo ayudar? Si quieres puedo orientarte sobre productos, requisitos o iniciar tu postulación.';
+    } else if (t.includes('humano') || t.includes('ejecutivo') || t.includes('persona') || t.includes('hablar con')) {
+      reply = '¡Por supuesto! Te derivo con un ejecutivo. Puedes <a onclick="openWhatsApp()" style="color: var(--cyan-dim); text-decoration: underline;">continuar por WhatsApp</a> o dejar tu número y te llamamos en menos de 1 hora hábil.';
+    } else {
+      reply = 'Gracias por tu consulta. Para responderte con precisión te derivo con un ejecutivo de nuestro equipo. ¿Prefieres <a onclick="openWhatsApp()" style="color: var(--cyan-dim); text-decoration: underline;">continuar por WhatsApp</a> o que te llamemos?';
+    }
+    setTimeout(() => addMsg(reply, 'bot'), 700);
+  }
+
+  function sendMsg() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+    addMsg(text, 'user');
+    input.value = '';
+    botReply(text);
+  }
+  function sendQuick(text) {
+    addMsg(text, 'user');
+    botReply(text);
+    // Hide some quick buttons after click for cleaner UX
+    document.getElementById('chatQuick').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
