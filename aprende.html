@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprende &mdash; Capital Pyme</title>
+<meta name="description" content="Capital Pyme - Gestion integral de productos financieros para PyMEs en Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">CP</span>
+      Capital<span>Pyme</span>
+    </a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">Inicio</a>
+      <a class="nav-tab" href="preevaluacion.html">Pre-evaluación</a>
+      <a class="nav-tab" href="productos.html">Productos</a>
+      <a class="nav-tab active" href="aprende.html">Aprende</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="preevaluacion.html">Pre-evaluación</a>
+    </div>
+  </div>
+</nav>
+
+<div class="blog-wrap">
+    <div class="blog-intro">
+      <div class="section-kicker">Aprende</div>
+      <h1 style="font-size: clamp(40px, 5vw, 64px); color: var(--navy-900); margin-bottom: 16px;">Guías para <em style="font-style: italic; color: var(--cyan-dim); font-weight: 400;">decidir mejor</em>.</h1>
+      <p style="font-size: 17px; color: var(--ink-60); max-width: 600px;">Contenido claro y sin jerga sobre financiamiento, liquidez y gestión financiera para pymes. Escrito por quienes negocian con los bancos todos los días.</p>
+    </div>
+
+    <div class="blog-cards">
+      <a class="bc" href="aprende-credito.html">
+        <div class="bc-cover"><span class="bc-cat">Guía práctica</span></div>
+        <div class="bc-body">
+          <h3>Cómo preparar tu empresa antes de pedir un crédito</h3>
+          <p>Los 6 puntos que un banco revisa antes de aprobar, y cómo llegar preparado para negociar mejores condiciones.</p>
+          <div class="bc-meta">Lectura de 6 min · Financiamiento <span class="bc-read">&middot; Leer &rarr;</span></div>
+        </div>
+      </a>
+      <a class="bc" href="aprende-factoring.html">
+        <div class="bc-cover"><span class="bc-cat">Conceptos</span></div>
+        <div class="bc-body">
+          <h3>Qué es el factoring y cuándo le conviene a tu pyme</h3>
+          <p>Si vendes a 30, 60 o 90 días, el factoring puede liberar caja sin endeudarte. Te explicamos cómo funciona en simple.</p>
+          <div class="bc-meta">Lectura de 5 min · Liquidez <span class="bc-read">&middot; Leer &rarr;</span></div>
+        </div>
+      </a>
+      <a class="bc" href="aprende-errores.html">
+        <div class="bc-cover"><span class="bc-cat">Buenas prácticas</span></div>
+        <div class="bc-body">
+          <h3>5 errores comunes al buscar financiamiento (y cómo evitarlos)</h3>
+          <p>Pedir al banco equivocado, no comparar, descuidar la carpeta tributaria: los tropiezos que encarecen tu crédito.</p>
+          <div class="bc-meta">Lectura de 5 min · Estrategia <span class="bc-read">&middot; Leer &rarr;</span></div>
+        </div>
+      </a>
+    </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo" style="color: white; margin-bottom: 16px;">
+        <span class="logo-mark">CP</span>
+        Capital<span style="color: var(--cyan);">Pyme</span>
+      </div>
+      <div class="footer-tag">Tu próximo financiamiento, <em>centralizado.</em></div>
+      <p style="font-size: 13px;">Gestión integral de productos financieros para PyMEs en Chile. Regulado y registrado en CMF.</p>
+    </div>
+    <div>
+      <h4>Producto</h4>
+      <a href="index.html">Cómo funciona</a>
+      <a href="productos.html">Productos</a>
+      <a href="preevaluacion.html">Pre-evaluación</a>
+      <a href="aprende.html">Aprende</a>
+    </div>
+    <div>
+      <h4>Aprende</h4>
+      <a href="aprende.html">Todas las guías</a>
+      <a href="aprende-credito.html">Preparar un crédito</a>
+      <a href="aprende-factoring.html">Qué es el factoring</a>
+      <a href="aprende-errores.html">Errores comunes</a>
+    </div>
+    <div>
+      <h4>Empresa</h4>
+      <a>Sobre nosotros</a>
+      <a>Contacto</a>
+      <a>Términos</a>
+      <a>Privacidad</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Capital Pyme SpA · Todos los derechos reservados</div>
+    <div>Hecho en Santiago, Chile 🇨🇱</div>
+  </div>
+</footer>
+
+<!-- ============================================== -->
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<!-- ============================================== -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">✦</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma · Asistente Capital Pyme</div>
+      <div class="status">En línea · Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">×</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      ¡Hola! 👋 Soy Pyma, la asistente virtual de Capital Pyme. Estoy acá para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      ¿En qué te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('¿Cómo funciona Capital Pyme?')">¿Cómo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('¿Qué documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('¿Cuánto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un crédito')">Quiero un crédito</button>
+    <button class="quick-btn" onclick="sendQuick('¿En qué consiste FOGAPE?')">¿Qué es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">→</button>
+    </div>
+    <div class="chat-handoff">
+      <span>💬</span>
+      <span>¿Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp →</a></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">&#10022;</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma &middot; Asistente Capital Pyme</div>
+      <div class="status">En l&iacute;nea &middot; Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      &iexcl;Hola! &#128075; Soy Pyma, la asistente virtual de Capital Pyme. Estoy ac&aacute; para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      &iquest;En qu&eacute; te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('&iquest;C&oacute;mo funciona Capital Pyme?')">&iquest;C&oacute;mo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Qu&eacute; documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Cu&aacute;nto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un cr&eacute;dito')">Quiero un cr&eacute;dito</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;En qu&eacute; consiste FOGAPE?')">&iquest;Qu&eacute; es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">&rarr;</button>
+    </div>
+    <div class="chat-handoff">
+      <span>&#128172;</span>
+      <span>&iquest;Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp &rarr;</a></span>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
