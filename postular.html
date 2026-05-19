@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Postular &mdash; Capital Pyme</title>
+<meta name="description" content="Capital Pyme - Gestion integral de productos financieros para PyMEs en Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">CP</span>
+      Capital<span>Pyme</span>
+    </a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">Inicio</a>
+      <a class="nav-tab active" href="postular.html">Postular</a>
+      <a class="nav-tab" href="reporte.html">Mi Reporte</a>
+      <a class="nav-tab" href="productos.html">Productos</a>
+      <a class="nav-tab" href="aprende.html">Aprende</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="postular.html">Postular</a>
+    </div>
+  </div>
+</nav>
+
+<div class="onboard-wrap">
+    <div class="onboard-head">
+      <a class="onboard-back" onclick="showPage('landing')">← Volver al inicio</a>
+      <div class="save-pill">Borrador guardado automáticamente</div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-step active" onclick="goStep(0)"><span>0 · Cuenta</span></div>
+      <div class="progress-step" onclick="goStep(1)"><span>1 · Empresa</span></div>
+      <div class="progress-step" onclick="goStep(2)"><span>2 · Balances</span></div>
+      <div class="progress-step" onclick="goStep(3)"><span>3 · Socios</span></div>
+      <div class="progress-step" onclick="goStep(4)"><span>4 · Capital</span></div>
+      <div class="progress-step" onclick="goStep(5)"><span>5 · Negocio</span></div>
+    </div>
+
+    <!-- STEP 0 — Cuenta liviana -->
+    <div class="onboard-card ob-step" id="ob-0">
+      <div class="ob-step-num">PASO 00 / 05</div>
+      <h2 class="ob-title">Crea tu <em>cuenta express</em></h2>
+      <p class="ob-desc">Solo necesitamos tu RUT, email y una clave. Así guardamos tu avance y te enviamos el reporte cuando esté listo. Toma 30 segundos.</p>
+
+      <div class="account-grid">
+        <div class="form-field">
+          <label>RUT empresa</label>
+          <input type="text" placeholder="76.123.456-7" value="78.453.291-K">
+        </div>
+        <div class="form-field">
+          <label>RUT representante</label>
+          <input type="text" placeholder="12.345.678-9" value="14.872.563-2">
+        </div>
+        <div class="form-field">
+          <label>Email de contacto</label>
+          <input type="email" placeholder="tu@empresa.cl" value="elena.morales@panaderiadonaelena.cl">
+        </div>
+        <div class="form-field">
+          <label>Teléfono / WhatsApp</label>
+          <input type="tel" placeholder="+56 9 1234 5678" value="+56 9 8745 2310">
+        </div>
+        <div class="form-field" style="grid-column: 1 / -1;">
+          <label>Crea una clave (mín. 8 caracteres)</label>
+          <input type="password" placeholder="••••••••" value="••••••••••">
+          <div class="form-field-hint">Te enviaremos un código de verificación al WhatsApp</div>
+        </div>
+      </div>
+
+      <div class="auth-divider">o regístrate con</div>
+
+      <div class="auth-options">
+        <button class="auth-btn"><span class="icon">🔑</span> Continuar con Clave Única <span style="margin-left: auto; font-size: 11px; color: var(--ink-40);">Recomendado</span></button>
+        <button class="auth-btn"><span class="icon">G</span> Continuar con Google</button>
+      </div>
+
+      <div style="margin-top: 24px; padding: 16px; background: var(--navy-50); border-radius: 12px; font-size: 12px; color: var(--ink-60); line-height: 1.5;">
+        Al crear tu cuenta aceptas nuestros <a style="color: var(--cyan-dim); text-decoration: underline;">Términos</a> y la <a style="color: var(--cyan-dim); text-decoration: underline;">Política de Privacidad</a>. No vendemos tus datos ni compartimos tu información financiera sin tu autorización expresa.
+      </div>
+
+      <div class="ob-foot">
+        <div class="ob-foot-info">Paso 0 de 5 · Próximo: Carpeta Tributaria</div>
+        <button class="btn btn-primary btn-lg" onclick="goStep(1)">Crear cuenta y continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="onboard-card ob-step" id="ob-1" style="display:none;">
+      <div class="ob-step-num">PASO 01 / 05</div>
+      <h2 class="ob-title">Carpeta Tributaria de la <em>empresa</em></h2>
+      <p class="ob-desc">Descárgala desde tu portal del SII (Servicios online → Situación tributaria → Carpeta tributaria). Aceptamos el PDF generado directamente por el SII.</p>
+
+      <div class="upload-zone uploaded" onclick="this.classList.toggle('uploaded')">
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">CarpetaTributariaSII_78453291-K.pdf</div>
+        <div class="upload-hint">2.1 MB · Subido hace 8 segundos · Detectada ventas 2023–2026</div>
+        <div class="upload-meta">SHA-256 · 7a2c...8e44 · validado</div>
+      </div>
+
+      <div style="margin-top: 32px; padding: 20px; background: var(--cyan-soft); border-radius: 14px; display: flex; gap: 14px; align-items: start;">
+        <div style="font-size: 20px;">💡</div>
+        <div style="font-size: 13px; color: var(--navy-800);"><b>¿No tienes la carpeta a mano?</b> Te enviamos un instructivo paso a paso al WhatsApp. También puedes autorizarnos lectura directa con tu Clave Tributaria.</div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(0)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(2)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="onboard-card ob-step" id="ob-2" style="display:none;">
+      <div class="ob-step-num">PASO 02 / 05</div>
+      <h2 class="ob-title">Últimos <em>3 balances</em> de la empresa</h2>
+      <p class="ob-desc">Sube los balances clasificados de los últimos tres ejercicios. Formato PDF firmado o Excel funciona perfecto.</p>
+
+      <div class="multi-upload">
+        <div class="upload-zone uploaded">
+          <div class="upload-icon">📊</div>
+          <div class="upload-title">Balance 2023</div>
+          <div class="upload-hint">Balance2023_DonaElena.pdf · 0.9 MB</div>
+        </div>
+        <div class="upload-zone uploaded">
+          <div class="upload-icon">📊</div>
+          <div class="upload-title">Balance 2024</div>
+          <div class="upload-hint">Balance2024_DonaElena.pdf · 1.1 MB</div>
+        </div>
+        <div class="upload-zone">
+          <div class="upload-icon">+</div>
+          <div class="upload-title">Balance 2025</div>
+          <div class="upload-hint">Arrastra o haz clic para subir</div>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(1)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(3)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="onboard-card ob-step" id="ob-3" style="display:none;">
+      <div class="ob-step-num">PASO 03 / 05</div>
+      <h2 class="ob-title">Carpeta Tributaria <em>de los socios</em></h2>
+      <p class="ob-desc">Necesitamos la carpeta tributaria personal de cada socio con participación mayor al 10%. Esto valida el respaldo patrimonial y construye el perfil del controlador.</p>
+
+      <div style="background: var(--navy-50); border-radius: 14px; padding: 20px; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900);">Elena Morales Pinto</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-60);">RUT 14.872.563-2 · 60% participación</div>
+          </div>
+          <span class="badge-ok">Carpeta cargada</span>
+        </div>
+        <div class="upload-meta">CarpetaTribSocio_14872563-2.pdf · 1.4 MB</div>
+      </div>
+
+      <div style="background: var(--navy-50); border-radius: 14px; padding: 20px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900);">Roberto Morales Pinto</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--ink-60);">RUT 13.456.789-1 · 40% participación</div>
+          </div>
+          <span class="badge-ok">Carpeta cargada</span>
+        </div>
+        <div class="upload-meta">CarpetaTribSocio_13456789-1.pdf · 1.2 MB</div>
+      </div>
+
+      <button class="btn btn-ghost" style="width: 100%; justify-content: center; padding: 16px; border-style: dashed;">+ Agregar otro socio</button>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(2)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(4)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="onboard-card ob-step" id="ob-4" style="display:none;">
+      <div class="ob-step-num">PASO 04 / 05</div>
+      <h2 class="ob-title">¿Qué <em>financiamiento</em> necesitas?</h2>
+      <p class="ob-desc">Cuéntanos cuánto, para qué y en qué plazo. Te recomendaremos el producto financiero adecuado.</p>
+
+      <div class="form-field">
+        <label>Monto solicitado (CLP)</label>
+        <div class="amount-input">
+          <span class="currency">$</span>
+          <input type="text" value="35.000.000">
+        </div>
+        <div class="form-field-hint">Puedes ajustarlo después según el análisis</div>
+      </div>
+
+      <div class="form-field">
+        <label>Tipo de financiamiento</label>
+        <div class="choice-grid">
+          <div class="choice-card selected">
+            <div class="choice-icon">💼</div>
+            <div class="choice-title">Capital de Trabajo</div>
+            <div class="choice-desc">Para sostener operación, compras de inventario o nómina</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">📄</div>
+            <div class="choice-title">Factoring</div>
+            <div class="choice-desc">Anticipar facturas y mejorar caja inmediata</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">🚛</div>
+            <div class="choice-title">Leasing</div>
+            <div class="choice-desc">Adquirir activos productivos: vehículos, equipos, máquinas</div>
+          </div>
+          <div class="choice-card">
+            <div class="choice-icon">📊</div>
+            <div class="choice-title">Aún no lo sé</div>
+            <div class="choice-desc">Recomiéndame según mi situación financiera</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Plazo deseado</label>
+          <select>
+            <option>12 meses</option>
+            <option>24 meses</option>
+            <option selected>36 meses</option>
+            <option>48 meses</option>
+            <option>60 meses</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Urgencia</label>
+          <select>
+            <option>Necesito en menos de 7 días</option>
+            <option selected>15 a 30 días</option>
+            <option>1 a 3 meses</option>
+            <option>Sin urgencia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(3)">← Atrás</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(5)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="onboard-card ob-step" id="ob-5" style="display:none;">
+      <div class="ob-step-num">PASO 05 / 05</div>
+      <h2 class="ob-title">Cuéntanos de tu <em>negocio</em></h2>
+      <p class="ob-desc">Una breve descripción nos ayuda a contextualizar tu reporte y matchearte con el ejecutivo correcto.</p>
+
+      <div class="form-field">
+        <label>Descripción del negocio</label>
+        <textarea>Somos una panadería artesanal en Ñuñoa con 8 años de operación. Atendemos público directo en local y abastecemos a 12 cafeterías y restaurantes del sector oriente con productos frescos diarios. Buscamos capital para ampliar la sala de producción e incorporar un nuevo horno rotatorio que permita aumentar volumen un 40%.</textarea>
+        <div class="form-field-hint">2 a 4 párrafos · Lo que cuentas aquí nutre el análisis cualitativo del reporte</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Clientes principales (opcional)</label>
+          <input type="text" value="Cafés del barrio italia, hoteles boutique, retail local">
+        </div>
+        <div class="form-field">
+          <label>N° de empleados</label>
+          <select>
+            <option>1 a 5</option>
+            <option selected>6 a 25</option>
+            <option>26 a 100</option>
+            <option>+100</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, var(--cyan-soft), white); border: 1px solid var(--cyan); border-radius: 16px; padding: 24px; margin-top: 16px;">
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <div style="font-size: 36px;">✨</div>
+          <div>
+            <div style="font-weight: 600; color: var(--navy-900); margin-bottom: 4px;">Ya tenemos todo lo necesario</div>
+            <div style="font-size: 13px; color: var(--ink-60);">Al continuar generaremos tu Ficha Financiera y el contrato de asesoría. Recibirás el reporte por correo y WhatsApp en menos de 48 horas hábiles.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ob-foot">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(4)">← Atrás</button>
+        <button class="btn btn-cyan btn-lg" onclick="showPage('dashboard')">Generar reporte →</button>
+      </div>
+    </div>
+  </div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo" style="color: white; margin-bottom: 16px;">
+        <span class="logo-mark">CP</span>
+        Capital<span style="color: var(--cyan);">Pyme</span>
+      </div>
+      <div class="footer-tag">Tu próximo financiamiento, <em>centralizado.</em></div>
+      <p style="font-size: 13px;">Gestión integral de productos financieros para PyMEs en Chile. Regulado y registrado en CMF.</p>
+    </div>
+    <div>
+      <h4>Producto</h4>
+      <a>Cómo funciona</a>
+      <a>Productos</a>
+      <a>Honorarios</a>
+      <a>Casos de éxito</a>
+    </div>
+    <div>
+      <h4>Aprende</h4>
+      <a>Blog</a>
+      <a>Academia</a>
+      <a>Guías PyME</a>
+      <a>Calculadoras</a>
+    </div>
+    <div>
+      <h4>Empresa</h4>
+      <a>Sobre nosotros</a>
+      <a>Contacto</a>
+      <a>Términos</a>
+      <a>Privacidad</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Capital Pyme SpA · Todos los derechos reservados</div>
+    <div>Hecho en Santiago, Chile 🇨🇱</div>
+  </div>
+</footer>
+
+<!-- ============================================== -->
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<!-- ============================================== -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">✦</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma · Asistente Capital Pyme</div>
+      <div class="status">En línea · Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">×</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      ¡Hola! 👋 Soy Pyma, la asistente virtual de Capital Pyme. Estoy acá para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      ¿En qué te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('¿Cómo funciona Capital Pyme?')">¿Cómo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('¿Qué documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('¿Cuánto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un crédito')">Quiero un crédito</button>
+    <button class="quick-btn" onclick="sendQuick('¿En qué consiste FOGAPE?')">¿Qué es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">→</button>
+    </div>
+    <div class="chat-handoff">
+      <span>💬</span>
+      <span>¿Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp →</a></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">&#10022;</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma &middot; Asistente Capital Pyme</div>
+      <div class="status">En l&iacute;nea &middot; Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      &iexcl;Hola! &#128075; Soy Pyma, la asistente virtual de Capital Pyme. Estoy ac&aacute; para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      &iquest;En qu&eacute; te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('&iquest;C&oacute;mo funciona Capital Pyme?')">&iquest;C&oacute;mo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Qu&eacute; documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Cu&aacute;nto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un cr&eacute;dito')">Quiero un cr&eacute;dito</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;En qu&eacute; consiste FOGAPE?')">&iquest;Qu&eacute; es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">&rarr;</button>
+    </div>
+    <div class="chat-handoff">
+      <span>&#128172;</span>
+      <span>&iquest;Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp &rarr;</a></span>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

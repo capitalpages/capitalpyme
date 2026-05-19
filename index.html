@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Pyme &mdash; Financiamiento centralizado para PyMEs</title>
+<meta name="description" content="Capital Pyme - Gestion integral de productos financieros para PyMEs en Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">CP</span>
+      Capital<span>Pyme</span>
+    </a>
+    <div class="nav-tabs">
+      <a class="nav-tab active" href="index.html">Inicio</a>
+      <a class="nav-tab" href="postular.html">Postular</a>
+      <a class="nav-tab" href="reporte.html">Mi Reporte</a>
+      <a class="nav-tab" href="productos.html">Productos</a>
+      <a class="nav-tab" href="aprende.html">Aprende</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="postular.html">Postular</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Versión 2.0 · Reporte financiero en minutos</div>
+        <h1>Tu próximo financiamiento, <em>centralizado en Capital Pyme.</em></h1>
+        <p class="hero-sub">Sube tu Carpeta Tributaria y tus últimos balances. Te entregamos un reporte financiero completo y te conectamos con el producto correcto: crédito, factoring, leasing, seguros y más.</p>
+        <div class="hero-actions">
+          <a class="btn btn-cyan btn-lg" onclick="showPage('onboarding')">Empezar postulación →</a>
+          <a class="btn btn-ghost btn-lg" onclick="showPage('dashboard')">Ver reporte de ejemplo</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-stat"><span class="num">$2.400M</span><span class="lbl">Gestionados en 2025</span></div>
+          <div class="trust-stat"><span class="num">48h</span><span class="lbl">Tiempo promedio de respuesta</span></div>
+          <div class="trust-stat"><span class="num">94%</span><span class="lbl">PyMEs aprobadas</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="stack-card stack-card-1">
+          <div class="sc-label">FINANCIAMIENTO SOLICITADO</div>
+          <div class="sc-big">$35.000.000</div>
+          <div class="sc-mini">Capital de trabajo · 36 meses</div>
+          <div class="sparkline">
+            <div style="height: 30%"></div><div style="height: 45%"></div><div style="height: 38%"></div>
+            <div style="height: 60%"></div><div style="height: 72%"></div><div style="height: 65%"></div>
+            <div style="height: 85%"></div><div style="height: 92%"></div>
+          </div>
+        </div>
+        <div class="stack-card stack-card-2">
+          <div class="sc-label">PANADERÍA DOÑA ELENA</div>
+          <div class="sc-big">182.450 <span style="font-size: 14px; color: var(--ink-60); font-weight: 400;">M$</span></div>
+          <div class="sc-mini">Ventas últimos 12 meses</div>
+          <div style="margin-top: 16px; display: flex; gap: 8px;">
+            <span class="badge-ok">+12.4% YoY</span>
+            <span class="badge-ok">F22 al día</span>
+          </div>
+        </div>
+        <div class="stack-card stack-card-3">
+          <div class="sc-label">RATIOS CLAVE</div>
+          <div class="ratio-row"><span>Cobertura cuota</span><b>2.10×</b></div>
+          <div class="ratio-row"><span>Endeudamiento</span><b>0.31×</b></div>
+          <div class="ratio-row"><span>Recomendación</span><span class="badge-ok">APTA</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-kicker">Cómo funciona</div>
+      <h2 class="section-title">Cinco pasos. <em>Cero papeleo presencial.</em></h2>
+      <p class="section-sub">Todo lo que pediría tu ejecutivo bancario, automatizado y en línea.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Carpeta Tributaria empresa</div>
+        <div class="step-desc">Descárgala del SII y súbela en PDF. Leemos F29, F22 e IVA postergado automáticamente.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Últimos 3 balances</div>
+        <div class="step-desc">Formato PDF o Excel. Extraemos activos, pasivos y resultados para construir tu reporte.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Carpetas tributarias socios</div>
+        <div class="step-desc">Para validar respaldo personal y construir el perfil de riesgo del controlador.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">¿Qué financiamiento necesitas?</div>
+        <div class="step-desc">Monto, plazo y destino. Te sugerimos el producto financiero correcto.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">05</div>
+        <div class="step-title">Reporte + contrato</div>
+        <div class="step-desc">Descargas tu Ficha Financiera y firmas el contrato de asesoría 100% en línea.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--white); margin: 0; max-width: 100%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div style="max-width: 1320px; margin: 0 auto;">
+      <div class="section-head">
+        <div class="section-kicker">Qué intermediamos</div>
+        <h2 class="section-title">Seis productos. <em>Un solo expediente.</em></h2>
+        <p class="section-sub">Una vez generado tu reporte, te conectamos con la red de bancos, factoring, leasing y aseguradoras que mejor se ajusten a tu perfil. Honorarios variables según producto, desde 3%.</p>
+      </div>
+      <div class="products-grid">
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">💼</div>
+          <h3>Crédito Capital de Trabajo</h3>
+          <p>Líneas de crédito y créditos rotativos para sostener tu operación. Con o sin garantías CORFO.</p>
+          <div class="product-tags"><span class="tag">FOGAPE</span><span class="tag">FOGAIN</span><span class="tag tag-fee">3% – 4%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">📄</div>
+          <h3>Factoring</h3>
+          <p>Liquidez inmediata anticipando tus facturas. Ideal si tu DSO supera los 60 días.</p>
+          <div class="product-tags"><span class="tag">Sin deuda</span><span class="tag">Anticipo 90%</span><span class="tag tag-fee">3%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">🚛</div>
+          <h3>Leasing</h3>
+          <p>Adquiere vehículos, maquinaria o equipos sin descapitalizar tu negocio.</p>
+          <div class="product-tags"><span class="tag">Mobiliario</span><span class="tag">Inmobiliario</span><span class="tag tag-fee">4% – 5%</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">🛡️</div>
+          <h3>Seguros</h3>
+          <p>Protección patrimonial, responsabilidad civil, vehículos comerciales y seguros de crédito.</p>
+          <div class="product-tags"><span class="tag">Patrimonial</span><span class="tag">RC</span><span class="tag tag-fee">15% prima</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">📊</div>
+          <h3>Servicios tributarios</h3>
+          <p>Asesoría F22, IDPC, IVA postergado, planificación tributaria y régimen Pro PyME.</p>
+          <div class="product-tags"><span class="tag">F22 anual</span><span class="tag">Pro PyME</span><span class="tag tag-fee">Tarifa fija</span></div>
+        </div>
+        <div class="product-card" onclick="showPage('products')">
+          <div class="product-icon">✨</div>
+          <h3>Otros servicios</h3>
+          <p>Cuenta corriente, líneas de comercio exterior, boletas de garantía y productos a medida.</p>
+          <div class="product-tags"><span class="tag">Cta. cte.</span><span class="tag">COMEX</span><span class="tag tag-fee">A convenir</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div style="background: var(--navy-900); border-radius: 32px; padding: 80px; color: white; text-align: center; position: relative; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(20, 184, 196, 0.2), transparent 60%);"></div>
+      <div style="position: relative; max-width: 720px; margin: 0 auto;">
+        <h2 style="font-size: clamp(40px, 5vw, 60px); color: white; margin-bottom: 20px;">¿Listo para tu próximo <em style="font-style: italic; color: var(--cyan); font-weight: 400;">financiamiento?</em></h2>
+        <p style="font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 36px;">Toma 10 minutos. Recibe tu reporte en 48 horas. Sin compromiso hasta firmar.</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a class="btn btn-cyan btn-lg" onclick="showPage('onboarding')">Empezar ahora — gratis →</a>
+          <a class="btn btn-wzp btn-lg" onclick="openWhatsApp()">Hablar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo" style="color: white; margin-bottom: 16px;">
+        <span class="logo-mark">CP</span>
+        Capital<span style="color: var(--cyan);">Pyme</span>
+      </div>
+      <div class="footer-tag">Tu próximo financiamiento, <em>centralizado.</em></div>
+      <p style="font-size: 13px;">Gestión integral de productos financieros para PyMEs en Chile. Regulado y registrado en CMF.</p>
+    </div>
+    <div>
+      <h4>Producto</h4>
+      <a>Cómo funciona</a>
+      <a>Productos</a>
+      <a>Honorarios</a>
+      <a>Casos de éxito</a>
+    </div>
+    <div>
+      <h4>Aprende</h4>
+      <a>Blog</a>
+      <a>Academia</a>
+      <a>Guías PyME</a>
+      <a>Calculadoras</a>
+    </div>
+    <div>
+      <h4>Empresa</h4>
+      <a>Sobre nosotros</a>
+      <a>Contacto</a>
+      <a>Términos</a>
+      <a>Privacidad</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Capital Pyme SpA · Todos los derechos reservados</div>
+    <div>Hecho en Santiago, Chile 🇨🇱</div>
+  </div>
+</footer>
+
+<!-- ============================================== -->
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<!-- ============================================== -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">✦</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma · Asistente Capital Pyme</div>
+      <div class="status">En línea · Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">×</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      ¡Hola! 👋 Soy Pyma, la asistente virtual de Capital Pyme. Estoy acá para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      ¿En qué te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('¿Cómo funciona Capital Pyme?')">¿Cómo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('¿Qué documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('¿Cuánto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un crédito')">Quiero un crédito</button>
+    <button class="quick-btn" onclick="sendQuick('¿En qué consiste FOGAPE?')">¿Qué es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">→</button>
+    </div>
+    <div class="chat-handoff">
+      <span>💬</span>
+      <span>¿Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp →</a></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- FLOATING BUTTONS + CHAT BOT -->
+<div class="float-stack" id="floatStack">
+  <button class="float-btn float-wzp" onclick="openWhatsApp()">
+    <span class="ico">W</span> WhatsApp
+  </button>
+  <button class="float-btn float-bot" onclick="openChat()" style="position: relative;">
+    <span class="ico">&#10022;</span> Habla con Pyma
+    <span class="float-badge">1</span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">P</div>
+    <div class="chat-head-text">
+      <div class="name">Pyma &middot; Asistente Capital Pyme</div>
+      <div class="status">En l&iacute;nea &middot; Responde al instante</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      &iexcl;Hola! &#128075; Soy Pyma, la asistente virtual de Capital Pyme. Estoy ac&aacute; para orientarte sobre financiamiento, requisitos, productos y nuestro proceso.
+      <span class="ts">15:42</span>
+    </div>
+    <div class="chat-msg bot">
+      &iquest;En qu&eacute; te puedo ayudar hoy?
+      <span class="ts">15:42</span>
+    </div>
+  </div>
+  <div class="chat-quick" id="chatQuick">
+    <button class="quick-btn" onclick="sendQuick('&iquest;C&oacute;mo funciona Capital Pyme?')">&iquest;C&oacute;mo funciona?</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Qu&eacute; documentos necesito?')">Documentos necesarios</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;Cu&aacute;nto cobran de honorarios?')">Honorarios</button>
+    <button class="quick-btn" onclick="sendQuick('Quiero un cr&eacute;dito')">Quiero un cr&eacute;dito</button>
+    <button class="quick-btn" onclick="sendQuick('&iquest;En qu&eacute; consiste FOGAPE?')">&iquest;Qu&eacute; es FOGAPE?</button>
+  </div>
+  <div class="chat-foot">
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button class="chat-send" onclick="sendMsg()">&rarr;</button>
+    </div>
+    <div class="chat-handoff">
+      <span>&#128172;</span>
+      <span>&iquest;Prefieres hablar con un ejecutivo? <a onclick="openWhatsApp()">Cambia a WhatsApp &rarr;</a></span>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
