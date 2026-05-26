@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sube tus documentos &mdash; Capital Pyme</title>
+<meta name="description" content="Sube los documentos para tu pre-evaluación financiera de forma segura.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .up-wrap { max-width: 720px; margin: 0 auto; padding: 56px 40px 90px; }
+  @media (max-width: 640px) { .up-wrap { padding: 32px 22px 70px; } }
+
+  .up-state { text-align: center; padding: 80px 24px; }
+  .up-state .ico {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--cyan-soft); color: var(--cyan-dim);
+    display: grid; place-items: center; font-size: 28px;
+    margin: 0 auto 24px;
+  }
+  .up-state h2 {
+    font-family: 'Fraunces'; font-size: 28px; font-weight: 600;
+    color: var(--navy-900); margin-bottom: 12px;
+  }
+  .up-state p { color: var(--ink-60); line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+  .up-loading .ico { background: var(--navy-50); }
+  .up-error .ico { background: #fceaea; color: var(--danger); }
+  .up-success .ico { background: #e6f6ee; color: var(--success); }
+  .up-success h2 { color: var(--success); }
+
+  .up-card {
+    background: white; border: 1px solid var(--line);
+    border-radius: 18px; padding: 44px;
+    box-shadow: 0 1px 3px rgba(10,22,40,0.04);
+  }
+  @media (max-width: 640px) { .up-card { padding: 28px 22px; } }
+
+  .up-greet {
+    font-family: 'JetBrains Mono'; font-size: 12px;
+    color: var(--cyan-dim); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .up-card h1 {
+    font-family: 'Fraunces'; font-size: clamp(28px,3.5vw,40px);
+    font-weight: 600; color: var(--navy-900);
+    line-height: 1.15; margin-bottom: 14px;
+  }
+  .up-card h1 em { font-style: italic; color: var(--cyan-dim); font-weight: 400; }
+  .up-card .sub { color: var(--ink-60); line-height: 1.65; margin-bottom: 32px; }
+
+  .up-info {
+    background: var(--cyan-soft); border-left: 3px solid var(--cyan);
+    border-radius: 8px; padding: 14px 18px; margin-bottom: 28px;
+    font-size: 13.5px; color: var(--navy-800); line-height: 1.55;
+  }
+  .up-info b { color: var(--navy-900); }
+
+  .up-file { margin-bottom: 22px; }
+  .up-file > label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--navy-800); margin-bottom: 10px;
+  }
+  .up-file .req { color: var(--cyan-dim); font-weight: 400; }
+
+  .up-progress {
+    display: none; margin-top: 10px; height: 6px;
+    background: var(--navy-50); border-radius: 100px; overflow: hidden;
+  }
+  .up-progress .bar {
+    height: 100%; background: var(--cyan); width: 0%;
+    transition: width .25s;
+  }
+  .up-progress.show { display: block; }
+
+  .up-status { font-size: 12.5px; color: var(--ink-60); margin-top: 8px; }
+  .up-status.err { color: var(--danger); }
+  .up-status.ok { color: var(--success); font-weight: 500; }
+
+  .up-submit {
+    width: 100%; padding: 16px; margin-top: 14px;
+    background: var(--cyan); color: var(--navy-900);
+    border: none; border-radius: 100px;
+    font-family: 'IBM Plex Sans'; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all .25s;
+  }
+  .up-submit:hover:not(:disabled) {
+    background: var(--cyan-dim); color: white;
+    transform: translateY(-1px);
+  }
+  .up-submit:disabled {
+    background: var(--navy-50); color: var(--ink-40); cursor: not-allowed;
+  }
+
+  .up-secure-foot {
+    text-align: center; font-size: 12.5px;
+    color: var(--ink-40); margin-top: 28px; line-height: 1.6;
+  }
+  .up-secure-foot a { color: var(--cyan-dim); }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="logo" href="index.html">
+      <img class="logo-mark" src="logo-capitalpyme.jpg" alt="Capital Pyme">
+      Capital<span>Pyme</span>
+    </a>
+    <div class="nav-tabs" style="visibility:hidden;"></div>
+    <div class="nav-cta"></div>
+  </div>
+</nav>
+
+<div class="up-wrap">
+
+  <!-- Estado: cargando token -->
+  <div class="up-state up-loading" id="state-loading">
+    <div class="ico">⏳</div>
+    <h2>Validando tu enlace…</h2>
+    <p>Un momento, estamos verificando tu acceso.</p>
+  </div>
+
+  <!-- Estado: error (sin token, inválido o expirado) -->
+  <div class="up-state up-error" id="state-error" style="display:none;">
+    <div class="ico">🔒</div>
+    <h2 id="error-title">Enlace no válido</h2>
+    <p id="error-msg">El enlace que estás usando no es válido o ha expirado. Por favor contacta a Capital Pyme para que te envíen uno nuevo.</p>
+    <div style="margin-top:32px;">
+      <a class="btn btn-cyan" onclick="openWhatsApp()">Contactar por WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- Estado: formulario de subida -->
+  <div id="state-form" style="display:none;">
+    <div class="up-card">
+      <div class="up-greet">Carga segura de documentos</div>
+      <h1 id="up-title">Hola <em id="up-nombre">cliente</em></h1>
+      <p class="sub" id="up-sub">Sube aquí los documentos para preparar tu análisis financiero de <b id="up-empresa">tu empresa</b>.</p>
+
+      <div class="up-info">
+        🔒 <b>Enlace privado y único.</b> Solo tú puedes ver esta página. Los archivos se almacenan de forma segura y son tratados con confidencialidad según nuestra <a href="privacidad.html" target="_blank" style="color:var(--cyan-dim);">Política de Privacidad</a>.
+      </div>
+
+      <div class="up-file">
+        <label>Carpeta Tributaria (SII) <span class="req">— requerido</span></label>
+        <label class="upload-zone" id="uz-1" for="file-1">
+          <div class="upload-icon">↓</div>
+          <div class="upload-title">Haz clic para seleccionar</div>
+          <div class="upload-hint">PDF descargable desde el portal del SII · máx. 10 MB</div>
+          <div class="upload-meta" id="uz-1-meta"></div>
+        </label>
+        <input type="file" id="file-1" accept=".pdf" style="display:none">
+      </div>
+
+      <div class="up-file">
+        <label>Último balance / estado de resultados <span class="req">— requerido</span></label>
+        <label class="upload-zone" id="uz-2" for="file-2">
+          <div class="upload-icon">↓</div>
+          <div class="upload-title">Haz clic para seleccionar</div>
+          <div class="upload-hint">PDF o Excel · idealmente el más reciente · máx. 10 MB</div>
+          <div class="upload-meta" id="uz-2-meta"></div>
+        </label>
+        <input type="file" id="file-2" accept=".pdf,.xls,.xlsx" style="display:none">
+      </div>
+
+      <div class="up-progress" id="up-progress">
+        <div class="bar" id="up-bar"></div>
+      </div>
+      <div class="up-status" id="up-status"></div>
+
+      <button class="up-submit" id="up-submit" onclick="enviarArchivos()" disabled>Enviar documentos</button>
+
+      <div class="up-secure-foot">
+        Tu enlace expira automáticamente por seguridad. Si tienes problemas, escríbenos por <a onclick="openWhatsApp()" style="cursor:pointer;">WhatsApp</a> o a <a href="mailto:contacto@capitalpyme.cl">contacto@capitalpyme.cl</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado: éxito -->
+  <div class="up-state up-success" id="state-success" style="display:none;">
+    <div class="ico">✓</div>
+    <h2>¡Documentos recibidos!</h2>
+    <p>Gracias. Recibimos tus archivos correctamente. Nuestro equipo preparará tu ficha de análisis financiero y te contactaremos en menos de 48 horas hábiles.</p>
+    <div style="margin-top:32px;">
+      <a class="btn btn-ghost" href="index.html">← Volver al sitio</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  // === CONFIGURACIÓN APPS SCRIPT ===
+  // Misma URL que en preevaluacion.html (ver guía paso a paso).
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyh4UwLhh6M7HjY_qBs7skZ_BYcShpBeXV0JOfbmKyecP3c8qrrjtQgnxUJMDnbxzaI/exec";
+
+  var TOKEN_ACTUAL = null;
+  var MAX_MB = 10;
+
+  // 1. Validar token al cargar la página
+  (function init() {
+    var params = new URLSearchParams(window.location.search);
+    var token = params.get('id');
+    if (!token || token.length < 16) {
+      mostrarError('Enlace no válido', 'El enlace que estás usando no contiene un código válido.');
+      return;
+    }
+    TOKEN_ACTUAL = token;
+
+    fetch(APPS_SCRIPT_URL + '?accion=validar&id=' + encodeURIComponent(token))
+      .then(function (r) { return r.json(); })
+      .then(function (resp) {
+        if (resp && resp.ok) {
+          mostrarFormulario(resp.nombre || 'cliente', resp.empresa || 'tu empresa');
+        } else {
+          var titulo = 'Enlace no válido';
+          var msg = 'El enlace no es válido o ha expirado. Contacta a Capital Pyme para que te envíen uno nuevo.';
+          if (resp && resp.error === 'expirado') {
+            titulo = 'Enlace expirado';
+            msg = 'Este enlace expiró. Por seguridad, los enlaces tienen vigencia limitada. Contáctanos para recibir uno nuevo.';
+          } else if (resp && resp.error === 'usado') {
+            titulo = 'Enlace ya utilizado';
+            msg = 'Ya recibimos tus documentos. Si necesitas enviar archivos adicionales, contáctanos.';
+          }
+          mostrarError(titulo, msg);
+        }
+      })
+      .catch(function () {
+        mostrarError('No pudimos validar tu enlace', 'Hubo un problema de conexión. Intenta de nuevo más tarde o contáctanos.');
+      });
+  })();
+
+  function mostrarError(titulo, msg) {
+    document.getElementById('state-loading').style.display = 'none';
+    document.getElementById('error-title').textContent = titulo;
+    document.getElementById('error-msg').textContent = msg;
+    document.getElementById('state-error').style.display = 'block';
+  }
+  function mostrarFormulario(nombre, empresa) {
+    document.getElementById('state-loading').style.display = 'none';
+    document.getElementById('up-nombre').textContent = nombre;
+    document.getElementById('up-empresa').textContent = empresa;
+    document.getElementById('state-form').style.display = 'block';
+  }
+
+  // 2. Manejo de selección de archivos
+  function configurarUpload(zoneId, fileId) {
+    var input = document.getElementById(fileId);
+    var zone = document.getElementById(zoneId);
+    input.addEventListener('change', function () {
+      if (!input.files || !input.files.length) return;
+      var f = input.files[0];
+      if (f.size > MAX_MB * 1024 * 1024) {
+        alert('El archivo "' + f.name + '" supera los ' + MAX_MB + ' MB permitidos. Por favor sube un archivo más liviano.');
+        input.value = '';
+        return;
+      }
+      var sizeKB = f.size / 1024;
+      var sizeTxt = sizeKB > 1024 ? (sizeKB/1024).toFixed(1) + ' MB' : Math.round(sizeKB) + ' KB';
+      zone.classList.add('uploaded');
+      zone.querySelector('.upload-icon').innerHTML = '✓';
+      zone.querySelector('.upload-title').textContent = 'Archivo listo';
+      zone.querySelector('.upload-hint').textContent = f.name + ' · ' + sizeTxt;
+      verificarFormulario();
+    });
+  }
+  configurarUpload('uz-1', 'file-1');
+  configurarUpload('uz-2', 'file-2');
+
+  function verificarFormulario() {
+    var f1 = document.getElementById('file-1').files[0];
+    var f2 = document.getElementById('file-2').files[0];
+    document.getElementById('up-submit').disabled = !(f1 && f2);
+  }
+
+  // 3. Convertir archivo a Base64 (Apps Script no recibe binarios crudos vía fetch)
+  function fileToBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var b64 = reader.result.split(',')[1];
+        resolve(b64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // 4. Enviar archivos
+  function enviarArchivos() {
+    var f1 = document.getElementById('file-1').files[0];
+    var f2 = document.getElementById('file-2').files[0];
+    if (!f1 || !f2) return;
+
+    var btn = document.getElementById('up-submit');
+    var prog = document.getElementById('up-progress');
+    var bar = document.getElementById('up-bar');
+    var status = document.getElementById('up-status');
+
+    btn.disabled = true; btn.textContent = 'Enviando…';
+    prog.classList.add('show'); bar.style.width = '10%';
+    status.className = 'up-status'; status.textContent = 'Preparando archivos…';
+
+    Promise.all([fileToBase64(f1), fileToBase64(f2)]).then(function (b64s) {
+      bar.style.width = '40%';
+      status.textContent = 'Enviando de forma segura…';
+
+      var payload = {
+        tipo: 'subida_documentos',
+        token: TOKEN_ACTUAL,
+        archivo1_nombre: f1.name, archivo1_mime: f1.type || 'application/pdf', archivo1_b64: b64s[0],
+        archivo2_nombre: f2.name, archivo2_mime: f2.type || 'application/pdf', archivo2_b64: b64s[1]
+      };
+
+      return fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+    }).then(function (r) {
+      bar.style.width = '90%';
+      return r.json();
+    }).then(function (resp) {
+      bar.style.width = '100%';
+      if (resp && resp.ok) {
+        document.getElementById('state-form').style.display = 'none';
+        document.getElementById('state-success').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        status.className = 'up-status err';
+        status.textContent = 'No pudimos enviar los archivos. ' + ((resp && resp.error) || 'Intenta de nuevo.');
+        btn.disabled = false; btn.textContent = 'Reintentar';
+      }
+    }).catch(function () {
+      status.className = 'up-status err';
+      status.textContent = 'Hubo un problema de conexión. Verifica tu internet e intenta de nuevo.';
+      btn.disabled = false; btn.textContent = 'Reintentar';
+    });
+  }
+</script>
+
+</body>
+</html>
